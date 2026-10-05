@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spark My Marketing — Writing for Connection</title>
+  <meta name="description" content="A free 7-day email course with a responsive AI writing coach. Stop trying to impress, start making connections.">
+  <link rel="icon" href="assets/mascot-white.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Sniglet:wght@400;800&family=Inter:ital,wght@0,400;0,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <img class="logo" src="assets/logo.png" alt="Spark My Marketing">
+  </header>
+
+  <section class="band band-dark">
+    <h1>stop trying to impress,<br>start making connections...</h1>
+    <img class="arrow" src="assets/arrow-white.png" alt="" aria-hidden="true">
+  </section>
+
+  <main>
+    <section class="about">
+      <img class="calendar" src="assets/calendar.png" alt="" aria-hidden="true">
+      <p>For 7 days, you'll get one short email a day:<br>a lesson, one writing prompt, and one thing to post.</p>
+      <p>By Day 7 you'll have written seven pieces that say who you are, why you do this work, and what you actually do for people, without the buzzwords.</p>
+      <p><u>Reply with what you wrote</u> and you'll get specific feedback from an AI writing coach built just for this.</p>
+      <p class="strong">Free. About 15 minutes a day.</p>
+      <img class="arrow" src="assets/arrow-dark.png" alt="" aria-hidden="true">
+    </section>
+
+    <section class="signup" id="signup">
+      <form class="card" id="signup-form" method="POST" action="YOUR_BREVO_FORM_ACTION" novalidate>
+        <h2>Writing for Connection</h2>
+        <p class="sub">7 days - with a responsive AI coach, right in your inbox</p>
+        <p class="tag">I'm not <u>even</u> trying to sell you anything</p>
+
+        <label class="sr-only" for="name">Name</label>
+        <input id="name" name="FIRSTNAME" type="text" placeholder="Name" autocomplete="given-name" required>
+
+        <label class="sr-only" for="email">Email</label>
+        <input id="email" name="EMAIL" type="email" placeholder="Email" autocomplete="email" required>
+
+        <!-- Brevo spam trap: leave hidden and empty -->
+        <input type="text" name="email_address_check" value="" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="locale" value="en">
+        <input type="hidden" name="html_type" value="simple">
+
+        <button type="submit">Start writing</button>
+
+        <label class="consent">
+          <input type="checkbox" name="OPT_IN" required>
+          <span>I agree to receive your newsletters and accept the data privacy statement.</span>
+        </label>
+
+        <p class="msg" id="form-msg" role="status" aria-live="polite" hidden></p>
+      </form>
+    </section>
+  </main>
+
+  <section class="band band-blue">
+    <img class="mascot" src="assets/mascot-white.png" alt="Spark My Marketing mascot">
+    <p>for people who feel gross<br>about always trying to<br>impress everyone.</p>
+  </section>
+
+  <footer>
+    <span>Copyright Spark My Marketing 2026</span>
+    <img src="assets/footer-logo.png" alt="Spark My Marketing">
+    <a href="mailto:hello@sparkmymarketing.com">hello@sparkmymarketing.com</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
