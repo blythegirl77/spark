@@ -7,7 +7,7 @@ Single-page site for the "Writing for Connection" 7-day email course. Plain HTML
 
 ## Connect the form to Brevo
 1. In Brevo, create a form (Contacts > Forms) and copy its `https://XXXX.sibforms.com/serve/...` URL.
-2. Paste it into `<form ... action="YOUR_BREVO_FORM_ACTION">` in `index.html`.
+2. Paste it into the `action` of the `<form>` in `index.html` (already done for the current form).
 3. Fields are `FIRSTNAME` and `EMAIL`; they need to match your Brevo contact attributes.
 
 ## Fonts
