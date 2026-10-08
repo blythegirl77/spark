@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Sniglet:wght@400;800&family=Inter:ital,wght@0,400;0,500;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -33,14 +33,31 @@
     </section>
 
     <section class="signup" id="signup">
-      <div class="card card-embed">
+      <form class="card" id="signup-form" method="POST" action="https://a3de5f6b.sibforms.com/serve/MUIFAGbwx4WjAQPiCdOBsm9jkVGvsKNWZSX3XFgtcBtAff03CSMl-OoQdV-Nc9DKUqS_hU-A2Kz4dGgGxQ2tlKO5LKPw69BkpJig9r7chU8RCC8-CFNyyaPAZ-yJSD3IhgqIpbmnIsWsy1309h6VPl45t5XvFkRdzxtywMWaEqt8ih82kqvtwX1FqlzKKOHUxbk3rlt9nZpCYsJSww==" novalidate>
         <h2>Writing for Connection</h2>
         <p class="sub">7 days - with a responsive AI coach, right in your inbox</p>
         <p class="tag">I'm not <u>even</u> trying to sell you anything</p>
 
-        <!-- Brevo's own hosted signup form (records signups and handles double opt-in) -->
-        <iframe class="brevo-form" src="https://a3de5f6b.sibforms.com/v2/serve/MUIFAGbwx4WjAQPiCdOBsm9jkVGvsKNWZSX3XFgtcBtAff03CSMl-OoQdV-Nc9DKUqS_hU-A2Kz4dGgGxQ2tlKO5LKPw69BkpJig9r7chU8RCC8-CFNyyaPAZ-yJSD3IhgqIpbmnIsWsy1309h6VPl45t5XvFkRdzxtywMWaEqt8ih82kqvtwX1FqlzKKOHUxbk3rlt9nZpCYsJSww==" title="Sign up for Writing for Connection" loading="lazy" scrolling="no"></iframe>
-      </div>
+        <label class="sr-only" for="name">Name</label>
+        <input id="name" name="FIRSTNAME" type="text" placeholder="Name" autocomplete="given-name" required>
+
+        <label class="sr-only" for="email">Email</label>
+        <input id="email" name="EMAIL" type="email" placeholder="Email" autocomplete="email" required>
+
+        <!-- Brevo spam trap: leave hidden and empty -->
+        <input type="text" name="email_address_check" value="" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="locale" value="en">
+        <input type="hidden" name="html_type" value="simple">
+
+        <button type="submit">Start writing</button>
+
+        <label class="consent">
+          <input type="checkbox" name="OPT_IN" required>
+          <span>I agree to receive your newsletters and accept the data privacy statement.</span>
+        </label>
+
+        <p class="msg" id="form-msg" role="status" aria-live="polite" hidden></p>
+      </form>
     </section>
   </main>
 
@@ -55,5 +72,6 @@
     <a href="mailto:hello@sparkmymarketing.com">hello@sparkmymarketing.com</a>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>
