@@ -44,7 +44,8 @@
       return;
     }
     btn.disabled = true;
-    var body = new FormData(form);
+    // Send it url-encoded, the same way Brevo's own form does.
+    var body = new URLSearchParams(new FormData(form));
     var url = form.action + (form.action.indexOf('?') === -1 ? '?' : '&') + 'isAjax=1';
 
     // First try a normal request so we can read Brevo's real answer (including errors).
@@ -63,7 +64,7 @@
         // The browser blocked reading the response (cross-site rules). Send it the older way;
         // we can't see Brevo's answer in that case, so the message just asks them to check email.
         console.warn('Falling back to no-cors submit', err);
-        return fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+        return fetch(form.action, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(new FormData(form)) })
           .then(done)
           .catch(function () { show('Something went wrong. Please try again.', true); });
       })
