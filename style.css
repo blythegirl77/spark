@@ -124,3 +124,68 @@ footer a:hover { text-decoration: underline; }
   footer span, footer a { text-align: center; }
   footer img { order: -1; }
 }
+
+/* ---- Brevo form, styled to match the site (Brevo's own CSS loads first) ---- */
+.sib-form { background: transparent !important; padding: 0; text-align: center; }
+.sib-form-container { max-width: 440px; margin: 0 auto; }
+#sib-container {
+  max-width: 440px !important;
+  margin: 0 auto;
+  padding: 38px 40px 30px !important;
+  background: #fdfdfd !important;
+  border: 3px solid var(--ink) !important;
+  border-radius: 14px !important;
+  box-shadow: 5px 6px 0 rgba(22, 28, 36, .25);
+  font-family: var(--font-ui);
+  text-align: center;
+}
+.sib-title { margin: 0 0 18px; font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; letter-spacing: .04em; color: var(--ink); }
+.sib-sub { margin: 0 0 8px; font-size: .78rem; color: var(--ink); }
+.sib-tag { margin: 0 0 26px; font-size: .78rem; font-style: italic; font-weight: 600; color: var(--ink); }
+.sib-field { padding: 6px 0 !important; }
+#sib-container input.input, #sib-container .input {
+  width: 100%;
+  height: auto !important;
+  padding: 10px 14px !important;
+  border: 1.5px solid var(--blue) !important;
+  border-radius: 10px !important;
+  background: var(--white) !important;
+  font-family: var(--font-ui) !important;
+  font-size: .85rem !important;
+  color: var(--ink) !important;
+  box-shadow: none;
+}
+#sib-container input.input::placeholder { font-family: var(--font-ui); color: #5c6678; text-align: left; }
+#sib-container input.input:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+.sib-field-button { padding: 14px 0 20px !important; }
+#sib-container .sib-form-block__button {
+  width: 100%;
+  padding: 12px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: var(--pink) !important;
+  color: var(--white) !important;
+  font-family: var(--font-display) !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  letter-spacing: .1em;
+  cursor: pointer;
+}
+#sib-container .sib-form-block__button:hover { filter: brightness(.95); }
+.sib-consent { font-family: var(--font-ui); font-size: .68rem; line-height: 1.4; text-align: left; color: var(--ink); }
+.sib-consent p { margin: 0; }
+.sib-legal { margin: 14px 0 0; font-size: .62rem; line-height: 1.4; text-align: left; color: #687484; }
+.sib-legal a { color: inherit; }
+.sib-form-message-panel { max-width: 440px; margin: 0 auto 14px !important; font-family: var(--font-ui); font-size: .85rem; text-align: left; border-radius: 8px; }
+@media (max-width: 560px) {
+  #sib-container { padding: 30px 22px 24px !important; }
+}
+
+/* From Brevo's embed code: message panels stay hidden until their script shows them */
+:where(.sib-form-message-panel) { display: none; }
+:where(.sib-form-message-panel .sib-notification__icon) { width: 20px; height: 20px; }
+.input--hidden { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; }
+
+/* Button loading spinner: hidden until Brevo's script shows it while sending */
+.sib-hide-loader-icon { display: none !important; }
+#sib-container .progress-indicator__icon { width: 16px; height: 16px; margin-right: 8px; vertical-align: -2px; fill: currentColor; display: inline-block; }
