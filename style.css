@@ -3,13 +3,16 @@
   --ink: #161c24;
   --blue: #31425f;
   --pink: #da55a7;
+  --grey: #d9d9d9;
   --white: #fff;
 
   /* Fonts: free stand-ins for the PDF's Sly Rabbit / More Sugar / Touvlo / Bristol.
      Swap these three variables (and the <link> in index.html) when you pick final fonts. */
-  --font-display: "Sniglet", "Fredoka", sans-serif;  /* card title, bold line, button */
+  --font-display: "Sniglet", "Fredoka", sans-serif;  /* form title, button */
   --font-body: "Fredoka", sans-serif;                /* headlines and body copy */
   --font-ui: "Inter", system-ui, sans-serif;         /* form fields and small print */
+
+  --gutter: clamp(20px, 6vw, 40px);
 }
 
 * { box-sizing: border-box; }
@@ -22,107 +25,108 @@ body {
   text-align: center;
 }
 img { display: block; margin-inline: auto; max-width: 100%; height: auto; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.hp { position: absolute; left: -9999px; }
+u { text-underline-offset: 3px; }
 
+/* Hero logo */
 .hero { padding: clamp(40px, 6vw, 70px) 20px clamp(48px, 7vw, 90px); }
 .logo { width: clamp(200px, 30vw, 330px); }
 
-.band { padding: clamp(60px, 9vw, 110px) 24px; color: var(--white); }
+/* Full-width coloured bands */
+.band { padding: clamp(56px, 9vw, 110px) var(--gutter); color: var(--white); }
+.band-pink { background: var(--pink); }
 .band-dark { background: var(--ink); }
-.band-blue { background: var(--blue); }
-.band h1, .band-blue p {
+.band h1, .band h2, .band .statement {
   margin: 0;
   font-weight: 400;
   letter-spacing: .14em;
-  line-height: 1.55;
-  font-size: clamp(1.3rem, 3.4vw, 2.1rem);
+  line-height: 1.6;
+  font-size: clamp(1.25rem, 3.4vw, 2rem);
 }
-.band-dark .arrow { width: 28px; margin-top: 40px; }
-.band-blue .mascot { width: 80px; margin-bottom: 40px; }
-
-.about { padding: clamp(50px, 8vw, 90px) 24px 40px; }
-.calendar { width: 96px; margin-bottom: 40px; }
-.about p {
+.band .arrow { width: 28px; margin: clamp(30px, 5vw, 48px) auto; }
+.lead {
   max-width: 34rem;
-  margin: 0 auto 1.6em;
-  font-size: clamp(.95rem, 1.6vw, 1.1rem);
+  margin: 0 auto 1.4em;
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  letter-spacing: .06em;
+  line-height: 1.6;
+}
+.senses {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(24px, 6vw, 60px);
+  margin-top: clamp(24px, 4vw, 40px);
+}
+.senses img { height: clamp(48px, 9vw, 72px); width: auto; margin: 0; }
+.scribble { width: clamp(90px, 14vw, 120px); margin-bottom: clamp(24px, 4vw, 40px); }
+
+/* Founder story on grey */
+.story { background: var(--grey); padding: clamp(48px, 8vw, 90px) var(--gutter); }
+.story-inner { max-width: 40rem; margin: 0 auto; text-align: left; }
+.story p, .details p {
+  margin: 0 0 1.5em;
+  font-size: clamp(.95rem, 1.5vw, 1.05rem);
+  line-height: 1.75;
+  letter-spacing: .04em;
+}
+.story p:last-child { margin-bottom: 0; }
+
+/* What you get / Why an AI coach */
+.details { padding: clamp(48px, 8vw, 90px) var(--gutter) clamp(48px, 8vw, 80px); }
+.calendar { width: clamp(80px, 12vw, 110px); margin-bottom: clamp(24px, 4vw, 40px); }
+.details-inner { max-width: 30rem; margin: 0 auto; text-align: justify; }
+.details h2 {
+  margin: clamp(30px, 5vw, 50px) 0 clamp(18px, 3vw, 28px);
+  text-align: center;
+  font-weight: 600;
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  letter-spacing: .06em;
+}
+.details h2:first-child { margin-top: 0; }
+.details p:last-child { margin-bottom: 0; }
+
+/* Free band */
+.band-free h2 { font-weight: 600; font-size: clamp(1.15rem, 2.6vw, 1.6rem); letter-spacing: .08em; margin-bottom: clamp(20px, 4vw, 36px); }
+.band-free p {
+  max-width: 40rem;
+  margin: 0 auto 1.4em;
+  font-size: clamp(.95rem, 1.6vw, 1.05rem);
   line-height: 1.75;
   letter-spacing: .05em;
 }
-.about .strong { font-family: var(--font-display); font-weight: 800; }
-.about .arrow { width: 28px; margin-top: 40px; }
+.band-free .arrow { margin-bottom: 0; }
 
-.signup { padding: 30px 20px clamp(60px, 9vw, 100px); }
-.card {
-  max-width: 440px;
-  margin: 0 auto;
-  padding: 38px 40px 30px;
-  background: #fdfdfd;
-  border: 3px solid var(--ink);
-  border-radius: 14px;
-  box-shadow: 5px 6px 0 rgba(22, 28, 36, .25);
-  font-family: var(--font-ui);
-}
-.card h2 { margin: 0 0 18px; font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; letter-spacing: .04em; }
-.card .sub { margin: 0 0 8px; font-size: .78rem; }
-.card .tag { margin: 0 0 26px; font-size: .78rem; font-style: italic; font-weight: 600; }
-.card input[type="text"], .card input[type="email"] {
-  display: block;
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 10px 14px;
-  border: 1.5px solid var(--blue);
-  border-radius: 10px;
-  background: var(--white);
-  font: inherit;
-  font-size: .85rem;
-  color: var(--ink);
-}
-.card input:focus-visible, .card button:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
-.card button {
-  width: 100%;
-  margin: 18px 0 26px;
-  padding: 12px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--pink);
-  color: var(--white);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  letter-spacing: .1em;
-  cursor: pointer;
-}
-.card button:hover { filter: brightness(.95); }
-.card button:disabled { opacity: .6; cursor: wait; }
-.consent { display: flex; gap: 8px; align-items: flex-start; text-align: left; font-size: .68rem; line-height: 1.4; }
-.consent input { margin-top: 2px; flex: none; }
-.msg { margin: 16px 0 0; font-size: .85rem; }
-.msg.error { color: #b3261e; }
+/* Signup section (the form itself is styled below) */
+.signup { padding: clamp(50px, 8vw, 90px) 20px clamp(60px, 9vw, 100px); }
 
-.band-blue { padding-block: clamp(60px, 9vw, 100px); }
-
-footer {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 16px;
-  padding: 36px clamp(16px, 4vw, 48px);
+/* Footer */
+.site-footer {
   background: var(--ink);
   color: var(--white);
+  padding: clamp(40px, 7vw, 64px) var(--gutter) 28px;
+}
+.footer-logo { width: clamp(130px, 18vw, 170px); margin-bottom: clamp(24px, 4vw, 36px); }
+.footer-tagline {
+  max-width: 28rem;
+  margin: 0 auto clamp(32px, 6vw, 56px);
+  font-size: clamp(.8rem, 1.6vw, .95rem);
+  letter-spacing: .12em;
+  line-height: 1.8;
+}
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
   font-family: var(--font-ui);
   font-size: .7rem;
+  letter-spacing: .04em;
 }
-footer img { width: 64px; }
-footer span { text-align: left; }
-footer a { color: inherit; text-align: right; text-decoration: none; }
-footer a:hover { text-decoration: underline; }
+.footer-row a { color: inherit; text-decoration: none; }
+.footer-row a:hover { text-decoration: underline; }
 
 @media (max-width: 560px) {
-  .card { padding: 30px 22px 24px; }
-  footer { grid-template-columns: 1fr; text-align: center; }
-  footer span, footer a { text-align: center; }
-  footer img { order: -1; }
+  .footer-row { flex-direction: column; align-items: center; text-align: center; }
+  .details-inner { text-align: left; }
 }
 
 /* ---- Brevo form, styled to match the site (Brevo's own CSS loads first) ---- */
