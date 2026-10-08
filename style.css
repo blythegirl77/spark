@@ -124,3 +124,18 @@ footer a:hover { text-decoration: underline; }
   footer span, footer a { text-align: center; }
   footer img { order: -1; }
 }
+
+/* Brevo hosted form embedded in the card */
+.card-embed { padding-bottom: 14px; }
+.card-embed .tag { margin-bottom: 8px; }
+.brevo-form {
+  display: block;
+  width: 100%;
+  height: 480px;
+  border: 0;
+  background: transparent;
+}
+@media (max-width: 560px) {
+  .card-embed { padding-left: 12px; padding-right: 12px; }
+  .brevo-form { height: 600px; }
+}
