@@ -1,7 +1,7 @@
 // Remembers where a visitor came from (UTM tags or referrer) for the length of their visit,
 // fills any matching hidden fields in the sign-up form, and exposes the values so the
 // /welcome/ page can send them to Tag Manager with the sign_up event.
-// Stored in sessionStorage only (cleared when the tab closes); no cookies.
+// The visit source is kept in sessionStorage (cleared when the tab closes); the sign-up ID in localStorage. No cookies.
 (function () {
   var KEY = 'spark-source';
   var PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
@@ -37,19 +37,29 @@
 
   var data = capture();
 
-  // One unique ID per sign-up attempt. It goes into the form (LEAD_EVENT_ID) and onto the
-  // sign_up event on /welcome/, so the two can be matched up (for example to de-duplicate in Meta).
-  var ID_KEY = 'spark-lead-id';
+  // One unique ID per sign-up attempt, like lead_1728508123456_k3x9p2qa. It goes into the hidden
+  // LEAD_EVENT_ID field (so it is stored on the Brevo contact), is kept in localStorage so it
+  // survives the jump to /welcome/, and is sent as event_id with the sign_up event. A Tag Manager
+  // variable can read the same value from localStorage key "spark_lead_event_id".
+  var ID_KEY = 'spark_lead_event_id';
   function newId() {
-    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
-    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+    var rand = '';
+    try {
+      var bytes = new Uint8Array(6);
+      crypto.getRandomValues(bytes);
+      rand = Array.prototype.map.call(bytes, function (b) { return b.toString(36); }).join('').slice(0, 8);
+    } catch (e) {}
+    while (rand.length < 8) rand += Math.random().toString(36).slice(2, 3);
+    return 'lead_' + Date.now() + '_' + rand;
+  }
+  function stored() {
+    try { return localStorage.getItem(ID_KEY); } catch (e) { return null; }
   }
   function leadId(forceNew) {
-    var id = null;
-    try { id = sessionStorage.getItem(ID_KEY); } catch (e) {}
+    var id = stored();
     if (!id || forceNew) {
       id = newId();
-      try { sessionStorage.setItem(ID_KEY, id); } catch (e) {}
+      try { localStorage.setItem(ID_KEY, id); } catch (e) {}
     }
     return id;
   }
@@ -89,8 +99,7 @@
   window.sparkAttribution = {
     get: function () {
       var out = Object.assign({}, read() || data);
-      var id = null;
-      try { id = sessionStorage.getItem(ID_KEY); } catch (e) {}
+      var id = stored();
       if (id) out.event_id = id;
       return out;
     }
