@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <!-- Consent defaults: tracking stays off until the visitor accepts (must run before Tag Manager) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+      analytics_storage: 'denied', wait_for_update: 500
+    });
+    try {
+      if (localStorage.getItem('spark-consent') === 'granted') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
+        });
+      }
+    } catch (e) {}
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TWLB5FQ6');</script>
+  <!-- End Google Tag Manager -->
+  <title>You're in | Spark My Marketing</title>
+  <link rel="icon" href="/assets/mascot-hero.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Sniglet:wght@400;800&family=Inter:ital,wght@0,400;0,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=12">
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWLB5FQ6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <header class="policy-header">
+    <a href="/" aria-label="Spark My Marketing home"><img src="/assets/logo-horizontal.svg" alt="Spark My Marketing" width="214" height="58"></a>
+  </header>
+
+  <main class="welcome">
+    <img class="welcome-mascot" src="/assets/mascot-hero.svg" alt="" width="128" height="104">
+    <h1>You&rsquo;re in!</h1>
+    <p>Check your inbox. Your welcome email is on its way, with a link to set up your profile so Day 1 can start.</p>
+    <p class="welcome-note">If you don&rsquo;t see it in a few minutes, check your spam or promotions folder.</p>
+  </main>
+
+  <section class="band band-pink welcome-band">
+    <p class="statement">stop marketing yourself and start creating connections instead...</p>
+  </section>
+
+  <footer class="site-footer">
+    <img class="footer-logo" src="/assets/logo-stacked-footer.svg" alt="Spark My Marketing">
+    <div class="footer-row">
+      <span>Copyright Spark My Marketing 2026</span>
+      <span class="footer-links"><a href="/privacy.html">Privacy Policy</a> &middot; <button type="button" class="cookie-settings" data-cookie-settings>Cookie settings</button></span>
+      <a href="mailto:hello@sparkmymarketing.com">hello@sparkmymarketing.com</a>
+    </div>
+  </footer>
+
+  <script src="/consent.js?v=2"></script>
+  <script src="/attribution.js?v=1"></script>
+  <script>
+    // The sign-up conversion: reaching this page means Brevo accepted the signup.
+    // Tag Manager can fire on the page path (/welcome/) or on this event.
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: 'sign_up', method: 'brevo_form' }, (window.sparkAttribution && window.sparkAttribution.get()) || {}));
+  </script>
+</body>
+</html>

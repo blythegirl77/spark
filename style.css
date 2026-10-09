@@ -263,3 +263,11 @@ u { text-underline-offset: 3px; }
 .footer-links { text-align: center; }
 .footer-links a { color: inherit; text-decoration: underline; }
 .consent-banner a { color: var(--blue); }
+
+/* /welcome/ thank-you page */
+.welcome { max-width: 40rem; margin: 0 auto; padding: clamp(24px, 6vw, 56px) var(--gutter) clamp(48px, 9vw, 96px); text-align: center; }
+.welcome-mascot { width: clamp(92px, 24vw, 128px); margin: 0 auto clamp(20px, 5vw, 36px); }
+.welcome h1 { margin: 0 0 16px; font-weight: 500; font-size: clamp(1.6rem, 5vw, 2.2rem); letter-spacing: .06em; }
+.welcome p { margin: 0 auto 1em; font-size: clamp(1rem, 2.4vw, 1.25rem); line-height: 1.6; letter-spacing: .04em; }
+.welcome .welcome-note { margin-top: 1.8em; font-family: var(--font-ui); font-size: .85rem; letter-spacing: 0; color: #5c6678; }
+.welcome-band .statement { max-width: 34rem; margin: 0 auto; font-size: clamp(1.1rem, 3vw, 1.5rem); }
