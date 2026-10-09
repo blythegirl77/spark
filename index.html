@@ -3,6 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Hero button: adds class "cta" on click. Registered before Tag Manager so the class is there when GTM reads the click. -->
+  <script>
+    document.addEventListener('click', function (e) {
+      var t = e.target && e.target.closest ? e.target.closest('#hero-cta') : null;
+      if (t) t.classList.add('cta');
+    }, true);
+  </script>
   <!-- Consent defaults: tracking stays off until the visitor accepts (must run before Tag Manager) -->
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -33,7 +40,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Sniglet:wght@400;800&family=Inter:ital,wght@0,400;0,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
-  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -43,6 +50,7 @@
 
   <header class="hero">
     <img class="logo" src="assets/logo.png" alt="Spark My Marketing">
+    <button type="button" class="hero-cta" id="hero-cta">Start writing today</button>
   </header>
 
   <section class="band band-pink">
@@ -211,6 +219,7 @@
   </footer>
 
   <script src="consent.js?v=2"></script>
+  <script src="cta.js?v=1"></script>
   <script src="attribution.js?v=5"></script>
 
   <!-- Brevo form script (handles submit, validation and the success/error messages) -->
