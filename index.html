@@ -189,7 +189,7 @@
 
               <p class="sib-legal">We use Brevo as our marketing platform. By submitting this form you agree that the personal data you provided will be transferred to Brevo for processing in accordance with <a href="https://www.brevo.com/en/legal/privacypolicy/" target="_blank" rel="nofollow noopener">Brevo's Privacy Policy.</a></p>
 
-              <!-- Hidden attribution fields (filled in by attribution.js; must match the Brevo attributes) -->
+              <!-- Hidden attribution fields (must match the Brevo attributes). attribution.js fills the UTM, FBCLID, GA_CLIENT_ID and SIGNUP_PAGE ones; LEAD_EVENT_ID, USER_AGENT and FBP are left for Tag Manager. -->
               <input type="hidden" name="GA_CLIENT_ID">
               <input type="hidden" name="UTM_SOURCE">
               <input type="hidden" name="UTM_MEDIUM">
@@ -199,6 +199,8 @@
               <input type="hidden" name="FBCLID">
               <input type="hidden" name="LEAD_EVENT_ID">
               <input type="hidden" name="SIGNUP_PAGE">
+              <input type="hidden" name="USER_AGENT">
+              <input type="hidden" name="FBP">
               <input type="text" name="email_address_check" value="" class="input--hidden">
               <input type="hidden" name="locale" value="en">
             </form>
