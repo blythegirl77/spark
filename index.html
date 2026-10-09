@@ -3,6 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Consent defaults: tracking stays off until the visitor accepts (must run before Tag Manager) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+      analytics_storage: 'denied', wait_for_update: 500
+    });
+    try {
+      if (localStorage.getItem('spark-consent') === 'granted') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
+        });
+      }
+    } catch (e) {}
+  </script>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -17,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Sniglet:wght@400;800&family=Inter:ital,wght@0,400;0,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -179,9 +195,12 @@
     <p class="footer-tagline">for people who feel gross about always trying to impress everyone.</p>
     <div class="footer-row">
       <span>Copyright Spark My Marketing 2026</span>
+      <button type="button" class="cookie-settings" data-cookie-settings>Cookie settings</button>
       <a href="mailto:hello@sparkmymarketing.com">hello@sparkmymarketing.com</a>
     </div>
   </footer>
+
+  <script src="consent.js?v=1"></script>
 
   <!-- Brevo form script (handles submit, validation and the success/error messages) -->
   <script>
