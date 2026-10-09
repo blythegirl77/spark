@@ -37,6 +37,23 @@
 
   var data = capture();
 
+  // One unique ID per sign-up attempt. It goes into the form (LEAD_EVENT_ID) and onto the
+  // sign_up event on /welcome/, so the two can be matched up (for example to de-duplicate in Meta).
+  var ID_KEY = 'spark-lead-id';
+  function newId() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+  }
+  function leadId(forceNew) {
+    var id = null;
+    try { id = sessionStorage.getItem(ID_KEY); } catch (e) {}
+    if (!id || forceNew) {
+      id = newId();
+      try { sessionStorage.setItem(ID_KEY, id); } catch (e) {}
+    }
+    return id;
+  }
+
   // Google Analytics client ID, read from the _ga cookie. It only exists if the visitor accepted
   // cookies and GA4 has loaded, so it is looked up again at the moment of sign-up.
   function gaClientId() {
@@ -45,8 +62,9 @@
   }
 
   // Fill hidden fields in the sign-up form, if they exist (names must match the Brevo attributes).
-  function fill() {
+  function fill(e) {
     var d = read() || data;
+    var isSubmit = !!(e && e.type === 'submit');
     var map = { UTM_SOURCE: 'utm_source', UTM_MEDIUM: 'utm_medium', UTM_CAMPAIGN: 'utm_campaign',
                 UTM_CONTENT: 'utm_content', UTM_TERM: 'utm_term', FBCLID: 'fbclid', LANDING_PAGE: 'landing_page' };
     Object.keys(map).forEach(function (field) {
@@ -55,16 +73,26 @@
     });
     var g = document.querySelector('#sib-form [name="GA_CLIENT_ID"]');
     if (g) g.value = gaClientId();
+    var lid = document.querySelector('#sib-form [name="LEAD_EVENT_ID"]');
+    if (lid) lid.value = leadId(isSubmit);
     var sp = document.querySelector('#sib-form [name="SIGNUP_PAGE"]');
     if (sp) sp.value = location.pathname;
   }
   function init() {
-    fill();
+    fill(null);
     var form = document.getElementById('sib-form');
     // Capture phase: runs before Brevo's own submit handler reads the form.
     if (form) form.addEventListener('submit', fill, true);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
-  window.sparkAttribution = { get: function () { return read() || data; } };
+  window.sparkAttribution = {
+    get: function () {
+      var out = Object.assign({}, read() || data);
+      var id = null;
+      try { id = sessionStorage.getItem(ID_KEY); } catch (e) {}
+      if (id) out.event_id = id;
+      return out;
+    }
+  };
 })();
