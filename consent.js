@@ -30,7 +30,7 @@
     banner.setAttribute('aria-label', 'Cookie consent');
     banner.innerHTML =
       '<p>We’d like to use cookies to understand how people use this site. ' +
-      'You can say no and the site works the same.</p>' +
+      'You can say no and the site works the same. <a href="privacy.html">Privacy policy</a></p>' +
       '<div class="consent-actions">' +
       '<button type="button" class="consent-btn consent-decline">No thanks</button>' +
       '<button type="button" class="consent-btn consent-accept">Accept</button>' +
