@@ -1,6 +1,8 @@
-// Remembers where a visitor came from (UTM tags or referrer) for the length of their visit,
-// fills any matching hidden fields in the sign-up form, and exposes the values so the
-// /welcome/ page can send them to Tag Manager with the sign_up event.
+// Remembers where a visitor came from (UTM tags or referrer) for the length of their visit and
+// exposes the values (window.sparkAttribution.get()) so the /welcome/ page can send them to
+// Tag Manager with the sign_up event.
+// It does NOT touch the sign-up form: the hidden inputs are filled by the Tag Manager tag
+// "Funnel attribution - fill Brevo fields".
 // Stored in sessionStorage only (cleared when the tab closes); no cookies.
 (function () {
   var KEY = 'spark-source';
@@ -36,35 +38,6 @@
   }
 
   var data = capture();
-
-  // Google Analytics client ID, read from the _ga cookie. It only exists if the visitor accepted
-  // cookies and GA4 has loaded, so it is looked up again at the moment of sign-up.
-  function gaClientId() {
-    var m = document.cookie.match(/(?:^|;\s*)_ga=GA\d+\.\d+\.(\d+\.\d+)/);
-    return m ? m[1] : '';
-  }
-
-  // Fill hidden fields in the sign-up form, if they exist (names must match the Brevo attributes).
-  function fill() {
-    var d = read() || data;
-    var map = { UTM_SOURCE: 'utm_source', UTM_MEDIUM: 'utm_medium', UTM_CAMPAIGN: 'utm_campaign',
-                UTM_CONTENT: 'utm_content', UTM_TERM: 'utm_term', FBCLID: 'fbclid', LANDING_PAGE: 'landing_page' };
-    Object.keys(map).forEach(function (field) {
-      var el = document.querySelector('#sib-form [name="' + field + '"]');
-      if (el && d[map[field]]) el.value = d[map[field]];
-    });
-    var g = document.querySelector('#sib-form [name="GA_CLIENT_ID"]');
-    if (g) g.value = gaClientId();
-    var sp = document.querySelector('#sib-form [name="SIGNUP_PAGE"]');
-    if (sp) sp.value = location.pathname;
-  }
-  function init() {
-    fill();
-    var form = document.getElementById('sib-form');
-    // Capture phase: runs before Brevo's own submit handler reads the form.
-    if (form) form.addEventListener('submit', fill, true);
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
   window.sparkAttribution = {
     get: function () {
