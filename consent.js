@@ -4,11 +4,13 @@
 (function () {
   var KEY = 'spark-consent';
 
+  var SHARED_KEY = 'tracking_consent'; // shared with the rest of the analytics setup: granted / denied
+
   function read() {
-    try { return localStorage.getItem(KEY); } catch (e) { return null; }
+    try { return localStorage.getItem(SHARED_KEY) || localStorage.getItem(KEY); } catch (e) { return null; }
   }
   function save(v) {
-    try { localStorage.setItem(KEY, v); } catch (e) {}
+    try { localStorage.setItem(SHARED_KEY, v); localStorage.setItem(KEY, v); } catch (e) {}
   }
   function update(state) {
     window.dataLayer = window.dataLayer || [];
@@ -17,6 +19,7 @@
       ad_storage: state, ad_user_data: state, ad_personalization: state, analytics_storage: state
     });
     window.dataLayer.push({ event: 'consent_' + state });
+    window.dataLayer.push({ event: 'tracking_consent_update', tracking_consent: state });
   }
 
   var banner;

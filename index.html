@@ -19,10 +19,17 @@
       analytics_storage: 'denied', wait_for_update: 500
     });
     try {
-      if (localStorage.getItem('spark-consent') === 'granted') {
-        gtag('consent', 'update', {
-          ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
-        });
+      // Saved choice: the shared key is tracking_consent (granted / denied). Older visits used spark-consent.
+      var saved = localStorage.getItem('tracking_consent') || localStorage.getItem('spark-consent');
+      if (saved === 'granted' || saved === 'denied') {
+        if (!localStorage.getItem('tracking_consent')) localStorage.setItem('tracking_consent', saved);
+        if (saved === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
+          });
+        }
+        // Tell Tag Manager about the saved choice before it loads
+        dataLayer.push({ event: 'tracking_consent_update', tracking_consent: saved });
       }
     } catch (e) {}
   </script>
@@ -50,7 +57,7 @@
 
   <header class="hero">
     <img class="logo" src="assets/logo.png" alt="Spark My Marketing">
-    <button type="button" class="hero-cta" id="hero-cta">Start writing today</button>
+    <button type="button" class="hero-cta cta" id="hero-cta">Start writing today</button>
   </header>
 
   <section class="band band-pink">
@@ -201,6 +208,7 @@
               <input type="hidden" name="SIGNUP_PAGE">
               <input type="hidden" name="USER_AGENT">
               <input type="hidden" name="FBP">
+              <input type="hidden" name="TRACKING_CONSENT">
               <input type="text" name="email_address_check" value="" class="input--hidden">
               <input type="hidden" name="locale" value="en">
             </form>
@@ -220,7 +228,7 @@
     </div>
   </footer>
 
-  <script src="consent.js?v=2"></script>
+  <script src="consent.js?v=3"></script>
   <script src="cta.js?v=1"></script>
   <script src="attribution.js?v=5"></script>
 

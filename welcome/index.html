@@ -13,10 +13,17 @@
       analytics_storage: 'denied', wait_for_update: 500
     });
     try {
-      if (localStorage.getItem('spark-consent') === 'granted') {
-        gtag('consent', 'update', {
-          ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
-        });
+      // Saved choice: the shared key is tracking_consent (granted / denied). Older visits used spark-consent.
+      var saved = localStorage.getItem('tracking_consent') || localStorage.getItem('spark-consent');
+      if (saved === 'granted' || saved === 'denied') {
+        if (!localStorage.getItem('tracking_consent')) localStorage.setItem('tracking_consent', saved);
+        if (saved === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
+          });
+        }
+        // Tell Tag Manager about the saved choice before it loads
+        dataLayer.push({ event: 'tracking_consent_update', tracking_consent: saved });
       }
     } catch (e) {}
   </script>
@@ -64,7 +71,7 @@
     </div>
   </footer>
 
-  <script src="/consent.js?v=2"></script>
+  <script src="/consent.js?v=3"></script>
   <script src="/attribution.js?v=5"></script>
   <script>
     // The sign-up conversion: reaching this page means Brevo accepted the signup.
