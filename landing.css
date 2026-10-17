@@ -3,7 +3,7 @@ body.lp { text-align: center; }
 .lp-header { padding: 20px var(--gutter) 0; }
 .lp-header img { margin: 0 auto; width: clamp(150px, 40vw, 214px); }
 
-.lp-hero { margin-top: 20px; padding: clamp(48px, 8vw, 90px) var(--gutter); background: var(--pink); color: var(--white); }
+.lp-hero { margin-top: 0; padding: clamp(48px, 8vw, 90px) var(--gutter); background: var(--pink); color: var(--white); }
 .lp-hero h1 { margin: 0 auto 18px; max-width: 36rem; font-weight: 500; font-size: clamp(1.6rem, 5.6vw, 2.6rem); letter-spacing: .06em; line-height: 1.35; }
 .lp-sub { max-width: 34rem; margin: 0 auto; font-size: clamp(1rem, 2.6vw, 1.3rem); letter-spacing: .04em; line-height: 1.6; }
 
@@ -44,3 +44,6 @@ body.lp { text-align: center; }
 .lp-scribble { width: clamp(84px, 13vw, 108px); }
 
 .nb { white-space: nowrap; }
+
+/* Original header (stacked logo + button) on the landing pages */
+.lp-top { padding-bottom: clamp(40px, 6vw, 64px); }
