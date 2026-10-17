@@ -35,3 +35,10 @@ body.lp { text-align: center; }
 .lp-footer a { color: inherit; }
 .lp-footer-dark { margin-top: 0; }
 @media (max-width: 560px) { .lp-footer { flex-direction: column; text-align: center; } }
+
+/* Graphics from the original page (same size and position on both pages) */
+.lp-arrow { width: 28px; height: auto; margin: clamp(28px, 4vw, 40px) auto 0; }
+.lp-arrow-form { margin: 0 auto clamp(20px, 3vw, 28px); }
+.lp-icon { margin: 0 auto clamp(24px, 4vw, 36px); height: auto; }
+.lp-calendar { width: clamp(80px, 12vw, 100px); }
+.lp-scribble { width: clamp(84px, 13vw, 108px); }
