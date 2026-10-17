@@ -42,3 +42,5 @@ body.lp { text-align: center; }
 .lp-icon { margin: 0 auto clamp(24px, 4vw, 36px); height: auto; }
 .lp-calendar { width: clamp(80px, 12vw, 100px); }
 .lp-scribble { width: clamp(84px, 13vw, 108px); }
+
+.nb { white-space: nowrap; }
