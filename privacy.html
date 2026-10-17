@@ -137,5 +137,23 @@
 
   <script src="consent.js?v=3"></script>
   <script src="attribution.js?v=6"></script>
+  <script>
+    // Visitors who arrive from an ad test page (challenge/welcome A or B) stay in that funnel:
+    // the logo and Home link are not clickable for them. Everyone else sees the normal links.
+    (function () {
+      var re = /\/(challenge|welcome)-[ab](\.html)?\/?(\?|#|$)/;
+      var fromAd = false;
+      try {
+        if (document.referrer && re.test(new URL(document.referrer).pathname)) sessionStorage.setItem('spark-ad-visit', '1');
+        fromAd = sessionStorage.getItem('spark-ad-visit') === '1';
+      } catch (e) {}
+      if (!fromAd) return;
+      var logo = document.querySelector('.policy-header a[href="/"]');
+      if (logo) logo.replaceWith.apply(logo, logo.childNodes);
+      var home = document.querySelector('.footer-links a[href="/"]');
+      if (home && home.nextSibling) home.nextSibling.textContent = home.nextSibling.textContent.replace(/^\s*·\s*/, '');
+      if (home) home.remove();
+    })();
+  </script>
 </body>
 </html>
