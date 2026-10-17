@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Consent defaults: tracking stays off until the visitor accepts (must run before Tag Manager) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+      analytics_storage: 'denied', wait_for_update: 500
+    });
+    try {
+      // Saved choice: the shared key is tracking_consent (granted / denied). Older visits used spark-consent.
+      var saved = localStorage.getItem('tracking_consent') || localStorage.getItem('spark-consent');
+      if (saved === 'granted' || saved === 'denied') {
+        if (!localStorage.getItem('tracking_consent')) localStorage.setItem('tracking_consent', saved);
+        if (saved === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
+          });
+        }
+        // Tell Tag Manager about the saved choice before it loads
+        dataLayer.push({ event: 'tracking_consent_update', tracking_consent: saved });
+      }
+    } catch (e) {}
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TWLB5FQ6');</script>
+  <!-- End Google Tag Manager -->
+  <title>Writing for Connection | Spark My Marketing</title>
+  <link rel="icon" href="/assets/mascot-hero.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Sniglet:wght@400;800&family=Inter:ital,wght@0,400;0,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+  <link rel="stylesheet" href="/style.css?v=13">
+  <link rel="stylesheet" href="/landing.css?v=1">
+</head>
+<body class="lp">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWLB5FQ6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <header class="lp-header">
+    <img src="/assets/logo-horizontal.svg" alt="Spark My Marketing" width="214" height="58">
+  </header>
+
+  <section class="lp-hero" data-section="hero">
+    <h1>Stand out from AI-generated content in 7 days</h1>
+    <p class="lp-sub">A free 7-day writing challenge that helps small business owners create authentic content that attracts ideal clients. 15 minutes a day.</p>
+  </section>
+
+  <section class="lp-sec" data-section="problem">
+    <div class="lp-photo is-placeholder" data-slot="game"><span>PHOTO PLACEHOLDER<br>murder mystery game photo</span></div>
+    <div class="lp-text"><p>AI has flooded every feed with polished, generic content. Buzzwords and templates make your brand blend in, and inconsistent posting costs you visibility.</p></div>
+  </section>
+
+  <section class="lp-sec lp-grey" data-section="what-you-get">
+    <div class="lp-text"><ul><li>7 daily lessons</li><li>7 writing prompts</li><li>7 ready-to-post assignments</li><li>personalized AI coaching feedback</li><li>a month of bonus prompts</li></ul></div>
+  </section>
+
+  <section class="lp-sec" data-section="ai-coach">
+    <div class="lp-text"><p>Smart AI feedback that pinpoints your strengths and areas to improve, so your content keeps getting better.</p></div>
+  </section>
+
+  <section class="lp-sec lp-dark" data-section="worries">
+    <div class="lp-text lp-lines"><p>Only 15 minutes a day.</p><p>No writing experience needed.</p><p>Built for consistency.</p><p>You choose what to share.</p></div>
+  </section>
+
+  <section class="lp-sec" data-section="behind-it">
+    <div class="lp-photo is-placeholder" data-slot="lara"><span>PHOTO PLACEHOLDER<br>photo of Lara</span></div>
+    <div class="lp-text"><p>Created by Lara Kehler, former head of product and game designer. 100% free, unsubscribe any time. Optional $29 kit at the end; the challenge is complete without it.</p></div>
+  </section>
+
+  <section class="lp-sec lp-formsec signup" id="signup" data-section="cta-form">
+    <p class="lp-cta">Join the free challenge and start creating content that converts.</p>
+    <!-- ===== FORM A EMBED START (paste the Brevo "WFC - A" embed here) ===== -->
+    <div class="lp-form-slot is-placeholder"><span>FORM PLACEHOLDER<br>Brevo form &ldquo;WFC &ndash; A&rdquo; goes here</span></div>
+    <!-- ===== FORM A EMBED END ===== -->
+  </section>
+
+  <footer class="lp-footer">
+    <span>Copyright Spark My Marketing 2026</span>
+    <span class="footer-links"><a href="/privacy.html">Privacy Policy</a> &middot; <button type="button" class="cookie-settings" data-cookie-settings>Cookie settings</button></span>
+  </footer>
+
+  <script src="/consent.js?v=3"></script>
+  <script src="/attribution.js?v=6"></script>
+
+  <!-- Brevo form script (handles submit, validation and the success/error messages) -->
+  <script>
+    window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
+    window.LOCALE = 'en';
+    window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+    window.REQUIRED_ERROR_MESSAGE = "This field cannot be left blank. ";
+    window.GENERIC_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+    window.INVALID_NUMBER = "The information provided is invalid. Please review the field format and try again.";
+    window.INVALID_DATE = "Please enter a valid date";
+    window.REQUIRED_MULTISELECT_MESSAGE = 'Please select at least 1 option';
+    window.translation = { common: { selectedList: '{quantity} list selected', selectedLists: '{quantity} lists selected', selectedOption: '{quantity} selected', selectedOptions: '{quantity} selected' } };
+    var AUTOHIDE = Boolean(0);
+  </script>
+  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+</body>
+</html>

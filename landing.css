@@ -1,0 +1,37 @@
+/* Ad landing pages (/challenge-a and /challenge-b). One stylesheet for both, so the pages can only differ in their words. */
+body.lp { text-align: center; }
+.lp-header { padding: 20px var(--gutter) 0; }
+.lp-header img { margin: 0 auto; width: clamp(150px, 40vw, 214px); }
+
+.lp-hero { margin-top: 20px; padding: clamp(48px, 8vw, 90px) var(--gutter); background: var(--pink); color: var(--white); }
+.lp-hero h1 { margin: 0 auto 18px; max-width: 36rem; font-weight: 500; font-size: clamp(1.6rem, 5.6vw, 2.6rem); letter-spacing: .06em; line-height: 1.35; }
+.lp-sub { max-width: 34rem; margin: 0 auto; font-size: clamp(1rem, 2.6vw, 1.3rem); letter-spacing: .04em; line-height: 1.6; }
+
+.lp-sec { padding: clamp(44px, 7vw, 80px) var(--gutter); }
+.lp-grey { background: var(--grey); }
+.lp-dark { background: var(--ink); color: var(--white); }
+.lp-formsec { background: var(--pink); color: var(--white); }
+
+.lp-text { max-width: 34rem; margin: 0 auto; text-align: left; }
+.lp-text p, .lp-text li { margin: 0 0 1.2em; font-size: clamp(1rem, 2vw, 1.1rem); line-height: 1.75; letter-spacing: .03em; }
+.lp-text > :last-child { margin-bottom: 0; }
+.lp-text ul { margin: 0; padding-left: 1.2em; }
+.lp-lines { text-align: center; }
+.lp-lines p { font-size: clamp(1.05rem, 2.4vw, 1.3rem); }
+
+.lp-photo { margin: 0 auto 28px; max-width: 34rem; border: 3px solid var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 5px 6px 0 rgba(22, 28, 36, .25); background: var(--white); }
+.lp-photo[data-slot="game"] { aspect-ratio: 4 / 3; }
+.lp-photo[data-slot="lara"] { aspect-ratio: 1 / 1; max-width: 18rem; }
+.lp-photo img { width: 100%; height: 100%; margin: 0; object-fit: cover; }
+
+.lp-cta { max-width: 34rem; margin: 0 auto 28px; font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 500; line-height: 1.5; letter-spacing: .04em; }
+.lp-form-slot { max-width: 440px; margin: 0 auto; min-height: 420px; }
+
+/* Clearly marked placeholders (removed when the real photos / forms are added) */
+.is-placeholder { display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; background: repeating-linear-gradient(45deg, #fff, #fff 12px, #f3e3ec 12px, #f3e3ec 24px); border: 3px dashed var(--ink); color: var(--ink); font-family: var(--font-ui); font-size: .85rem; font-weight: 600; letter-spacing: .08em; line-height: 1.6; }
+.lp-photo.is-placeholder { border-style: dashed; box-shadow: none; }
+
+.lp-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 28px var(--gutter); background: var(--ink); color: var(--white); font-family: var(--font-ui); font-size: .7rem; letter-spacing: .04em; }
+.lp-footer a { color: inherit; }
+.lp-footer-dark { margin-top: 0; }
+@media (max-width: 560px) { .lp-footer { flex-direction: column; text-align: center; } }
