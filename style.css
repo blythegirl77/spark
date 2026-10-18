@@ -160,6 +160,7 @@ u { text-underline-offset: 3px; }
   color: var(--ink) !important;
   box-shadow: none;
 }
+#sib-container label.entry__label { display: block; margin: 0 0 6px; font-family: var(--font-ui); font-size: .8rem; font-weight: 600; text-align: left; color: var(--ink); }
 #sib-container input.input::placeholder { font-family: var(--font-ui); color: #5c6678; text-align: left; }
 #sib-container input.input:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
 .sib-field-button { padding: 14px 0 20px !important; }
@@ -292,3 +293,4 @@ u { text-underline-offset: 3px; }
 .hero-cta:active { transform: translate(2px, 2px); box-shadow: 2px 3px 0 rgba(22, 28, 36, .25); }
 .hero-cta:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .hero-cta { transition: none; } }
+#sib-container #MEMORABLE::placeholder { font-size: .72rem; }
