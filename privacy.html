@@ -141,7 +141,7 @@
     // Visitors who arrive from an ad test page (challenge/welcome A or B) stay in that funnel:
     // the logo and Home link are not clickable for them. Everyone else sees the normal links.
     (function () {
-      var re = /\/((challenge|welcome)-[ab]|WEDO)(\.html)?\/?(index\.html)?(\?|#|$)/;
+      var re = /\/((challenge|welcome)-[ab]|welcome-wedo|WEDO)(\.html)?\/?(index\.html)?(\?|#|$)/;
       var fromAd = false;
       try {
         if (document.referrer && re.test(new URL(document.referrer).pathname.replace(/\/wedo/i, "/WEDO"))) sessionStorage.setItem('spark-ad-visit', '1');
