@@ -208,5 +208,44 @@
     var AUTOHIDE = Boolean(0);
   </script>
   <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+  <!-- Spark My Marketing — cookieless visit ping (sends to the Apps Script web app; no cookies, no consent needed) -->
+  <script>
+  (function () {
+    try {
+      var WEBAPP_URL = 'YOUR_WEBAPP_URL';
+      if (WEBAPP_URL.indexOf('https://') !== 0) return; // not set up yet
+      var q = new URLSearchParams(location.search);
+      var ua = navigator.userAgent || '';
+      var app = /Instagram/i.test(ua) ? 'instagram'
+              : /FBAN|FBAV|FB_IAB/i.test(ua) ? 'facebook'
+              : 'browser';
+      var dev = /Mobi|Android|iPhone|iPad/i.test(ua) ? 'mobile' : 'desktop';
+      var ref = '';
+      try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+
+      var params = new URLSearchParams({
+        action: 'visit',
+        page: location.pathname,
+        utm_source: q.get('utm_source') || '',
+        utm_medium: q.get('utm_medium') || '',
+        utm_campaign: q.get('utm_campaign') || '',
+        utm_content: q.get('utm_content') || '',
+        utm_term: q.get('utm_term') || '',
+        ref: ref,
+        dev: dev,
+        app: app
+      });
+      var url = WEBAPP_URL + '?' + params.toString();
+
+      // A plain GET, so it reaches doGet (sendBeacon would POST and hit the webhook handler).
+      if (window.fetch) {
+        fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true, credentials: 'omit' })
+          .catch(function () {});
+      } else {
+        new Image().src = url;
+      }
+    } catch (e) {}
+  })();
+  </script>
 </body>
 </html>
