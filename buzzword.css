@@ -1,0 +1,102 @@
+/* Buzzword Swipe tool (shared by /challenge-a and /challenge-b). Sits in the pink sign-up section. */
+.bz { max-width: 440px; margin: 0 auto; }
+.bz-stage:empty { display: none; }
+.bz-form-step[hidden] { display: none !important; }
+
+.bz-stage {
+  padding: 20px 20px 24px;
+  background: #fdfdfd;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 6px 0 rgba(22, 28, 36, .25);
+  color: var(--ink);
+  text-align: left;
+}
+.bz[data-step="7"] .bz-stage { margin-bottom: 20px; padding: 6px 14px; }
+.bz[data-step="7"] .bz-top { margin: 0; }
+
+.bz-top { display: flex; align-items: center; justify-content: space-between; min-height: 44px; margin: -6px 0 8px; }
+.bz-count { margin-left: auto; font-family: var(--font-ui); font-size: .75rem; letter-spacing: .04em; color: #5c6678; }
+.bz-back {
+  min-height: 44px; margin-left: -8px; padding: 0 10px;
+  border: 0; background: none; color: var(--ink);
+  font-family: var(--font-ui); font-size: .85rem; font-weight: 500; cursor: pointer;
+}
+
+.bz-title { margin: 0 0 8px; font-family: var(--font-body); font-weight: 500; font-size: clamp(1.25rem, 5vw, 1.5rem); line-height: 1.35; letter-spacing: .03em; }
+.bz-title:focus { outline: none; }
+.bz-sub { margin: 0 0 16px; font-family: var(--font-ui); font-size: .9rem; color: #5c6678; }
+.bz-title + .bz-options, .bz-title + .bz-card, .bz-title + .bz-questions { margin-top: 16px; }
+
+/* Step 1: industry list */
+.bz-options { display: grid; gap: 10px; }
+.bz-option {
+  display: block; width: 100%; min-height: 60px; padding: 12px 16px;
+  border: 2px solid var(--blue); border-radius: 12px; background: var(--white);
+  color: var(--ink); text-align: left; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bz-option.is-on { border-color: var(--pink); background: #fbeaf4; }
+.bz-option-label { display: block; font-family: var(--font-body); font-size: 1.05rem; font-weight: 500; letter-spacing: .02em; }
+.bz-option-who { display: block; margin-top: 2px; font-family: var(--font-ui); font-size: .78rem; line-height: 1.4; color: #5c6678; }
+
+/* Step 2: buzzword chips */
+.bz-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 20px; }
+.bz-chip {
+  min-height: 48px; padding: 10px 18px;
+  border: 2px solid var(--blue); border-radius: 999px; background: var(--white);
+  color: var(--ink); font-family: var(--font-body); font-size: 1rem; letter-spacing: .02em; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bz-chip.is-on { border-color: var(--pink); background: var(--pink); color: var(--white); }
+.bz-chip.is-on::before { content: "\2713\00a0"; }
+
+/* Cards (filler paragraph, example, swipe choices) */
+.bz-card { position: relative; margin: 0 0 16px; padding: 16px 18px; border: 2px solid var(--blue); border-radius: 12px; background: var(--white); }
+.bz-card-filler { background: #f1f2f5; border-style: dashed; }
+.bz-label { margin: 0 0 6px; font-family: var(--font-ui); font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--pink); }
+.bz-text { margin: 0; font-family: var(--font-body); font-size: 1.05rem; line-height: 1.6; letter-spacing: .02em; }
+
+/* Step 5: swipe */
+.bz-swipe { padding-bottom: 68px; transition: opacity .2s; }
+.bz-swipe.is-on { border-color: var(--pink); box-shadow: 0 0 0 2px var(--pink); }
+.bz-swipe.is-off { opacity: .55; }
+.bz-heart {
+  position: absolute; right: 12px; bottom: 10px;
+  width: 52px; height: 52px; padding: 12px;
+  border: 2px solid var(--pink); border-radius: 50%; background: var(--white);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.bz-heart svg { display: block; width: 100%; height: 100%; fill: none; stroke: var(--pink); stroke-width: 2; }
+.bz-swipe.is-on .bz-heart { background: var(--pink); }
+.bz-swipe.is-on .bz-heart svg { fill: var(--white); stroke: var(--white); }
+.bz-swipe.is-off .bz-heart { visibility: hidden; }
+.bz-result { min-height: 1.5em; margin: 0 0 12px; font-family: var(--font-body); font-size: 1.05rem; font-weight: 500; text-align: center; }
+
+/* Step 6: three questions */
+.bz-questions { margin: 0 0 16px; padding: 0; list-style: none; counter-reset: bzq; }
+.bz-q { position: relative; margin: 0 0 14px; padding-left: 40px; counter-increment: bzq; }
+.bz-q::before {
+  content: counter(bzq); position: absolute; left: 0; top: 0;
+  width: 28px; height: 28px; border-radius: 50%; background: var(--pink); color: var(--white);
+  font-family: var(--font-ui); font-size: .85rem; font-weight: 600; line-height: 28px; text-align: center;
+}
+.bz-q-ask { margin: 0 0 4px; font-family: var(--font-body); font-size: 1.05rem; font-weight: 500; line-height: 1.45; }
+.bz-q-answer { margin: 0; font-family: var(--font-ui); font-size: .92rem; line-height: 1.5; color: #3c4858; }
+.bz-q-answer::before { content: "\2192\00a0"; color: var(--pink); }
+
+/* Buttons */
+.bz-next {
+  display: block; width: 100%; min-height: 56px; margin: 4px 0 0; padding: 12px;
+  border: 0; border-radius: 999px; background: var(--pink); color: var(--white);
+  font-family: var(--font-display); font-size: 1.05rem; letter-spacing: .1em; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bz-next:disabled { background: #e8b9d6; cursor: default; }
+.bz-skip {
+  display: block; min-height: 44px; margin: 8px auto 0; padding: 0 12px;
+  border: 0; background: none; color: #5c6678;
+  font-family: var(--font-ui); font-size: .8rem; text-decoration: underline; cursor: pointer;
+}
+.bz button:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+.bz-next:focus-visible { outline-color: var(--ink); }

@@ -7,8 +7,14 @@
     var target = document.getElementById('signup');
     if (!target) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    // On the ad pages the Buzzword Swipe tool comes before the form: go to the tool's current step instead
+    var tool = document.getElementById('buzzword-swipe');
     var first = document.getElementById('FIRSTNAME');
+    if (tool && first && !first.offsetParent) {
+      tool.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      return;
+    }
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
     if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, reduce ? 0 : 500);
   });
 })();
