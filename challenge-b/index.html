@@ -42,7 +42,7 @@
   <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
   <link rel="stylesheet" href="/style.css?v=14">
   <link rel="stylesheet" href="/landing.css?v=5">
-  <link rel="stylesheet" href="/buzzword.css?v=2">
+  <link rel="stylesheet" href="/buzzword.css?v=3">
 </head>
 <body class="lp">
   <!-- Google Tag Manager (noscript) -->
@@ -60,6 +60,10 @@
     <p class="lp-sub">For people who feel gross about always trying to impress everyone.</p>
     <p class="lp-sub" style="margin-top: 1em; font-size: clamp(.9rem, 2.2vw, 1.1rem);">A free 7-day writing challenge. One email a day, about 15 minutes, with an AI coach that won't write for you.</p>
     <img class="lp-arrow" src="/assets/arrow-white.png" alt="" aria-hidden="true" width="28" height="45">
+    <!-- Buzzword Swipe tool (buzzword.js / buzzword.css / buzzwords.json, shared by both pages). Its last step leads to the form at the bottom. -->
+    <div class="bz" id="buzzword-swipe" data-src="/buzzwords.json?v=1" data-endpoint="https://script.google.com/macros/s/AKfycbyeWHm1OKpKIgedWI3Hc1NwlnSYwPKy1vIF-GIys6JGUEjYF1lH0sQYTh99Vf-9E7A/exec">
+      <div class="bz-stage"></div>
+    </div>
   </section>
 
   <section class="lp-sec" data-section="problem">
@@ -87,10 +91,6 @@
 
   <section class="lp-sec lp-formsec signup" id="signup" data-section="cta-form">
     <img class="lp-arrow lp-arrow-form" src="/assets/arrow-white.png" alt="" aria-hidden="true" width="28" height="45">
-    <!-- Buzzword Swipe tool (buzzword.js / buzzword.css / buzzwords.json, shared by both pages). Steps 1-6 are drawn into .bz-stage; step 7 is the form below. -->
-    <div class="bz" id="buzzword-swipe" data-src="/buzzwords.json?v=1" data-endpoint="https://script.google.com/macros/s/AKfycbyeWHm1OKpKIgedWI3Hc1NwlnSYwPKy1vIF-GIys6JGUEjYF1lH0sQYTh99Vf-9E7A/exec">
-    <div class="bz-stage"></div>
-    <div class="bz-form-step">
     <p class="lp-cta">Want to find your version? Day 1 is one question and about 15 minutes.</p>
     <!-- ===== FORM B EMBED START (Brevo "WFC - B") ===== -->
     <!-- Brevo sign-up form: markup, ids and field names come from Brevo's embed code; styling is ours (style.css). -->
@@ -192,8 +192,6 @@
         </div>
       </div>
     <!-- ===== FORM B EMBED END ===== -->
-    </div>
-    </div>
   </section>
 
   <footer class="lp-footer">
@@ -204,7 +202,7 @@
   <script src="/consent.js?v=4"></script>
   <script src="/attribution.js?v=6"></script>
   <script src="/cta.js?v=2"></script>
-  <script src="/buzzword.js?v=3"></script>
+  <script src="/buzzword.js?v=4"></script>
 
   <!-- Brevo form script (handles submit, validation and the success/error messages) -->
   <script>

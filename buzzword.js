@@ -1,17 +1,16 @@
-// Buzzword Swipe: the step-by-step tool in the sign-up section of /challenge-a and /challenge-b.
+// Buzzword Swipe: the six-step tool under the hero of /challenge-a and /challenge-b.
 // Both pages load this same file, buzzword.css and buzzwords.json, so the tool is identical on both.
-// Step 7 is the page's own Brevo form (already in the HTML); this script only shows it at the end
-// and fills its hidden INDUSTRY and BUZZWORDS fields. Written in plain ES5 for in-app browsers.
+// The last step leads to the page's own Brevo form at the bottom, and this script fills that form's
+// hidden INDUSTRY and BUZZWORDS fields. Written in plain ES5 for in-app browsers.
 (function () {
   var root = document.getElementById('buzzword-swipe');
   if (!root) return;
 
   // Words shown by the tool (the same on both pages).
   var COPY = {
-    stepOf: 'Step {n} of 7',
+    stepOf: 'Step {n} of 6',
     back: 'Back',
     next: 'Next',
-    skip: 'Skip to sign-up',
     industryTitle: 'What kind of business do you have?',
     wordsTitle: 'Which of these buzz words have you used?',
     wordsSub: "We've all done it.",
@@ -30,7 +29,6 @@
 
   var endpoint = root.getAttribute('data-endpoint') || '';
   var stage = root.querySelector('.bz-stage');
-  var formStep = root.querySelector('.bz-form-step');
   var form = document.getElementById('sib-form');
   var run = Math.random().toString(36).slice(2, 10); // per page view, kept in memory only (no cookie)
   var q = new URLSearchParams(location.search);
@@ -101,7 +99,7 @@
   function screen(n, title, sub) {
     stage.innerHTML = '';
     var top = el('div', 'bz-top');
-    if (n > 1) top.appendChild(button('bz-back', '‹ ' + COPY.back, function () { go(n === 7 ? 6 : n - 1); }));
+    if (n > 1) top.appendChild(button('bz-back', '‹ ' + COPY.back, function () { go(n - 1); }));
     top.appendChild(el('span', 'bz-count', t(COPY.stepOf, { n: n })));
     stage.appendChild(top);
     if (title) stage.appendChild(el('h2', 'bz-title', title));
@@ -113,9 +111,6 @@
     if (disabled) b.disabled = true;
     stage.appendChild(b);
     return b;
-  }
-  function skipLink() {
-    stage.appendChild(button('bz-skip', COPY.skip, function () { go(7); }));
   }
   function fillerText() {
     return group.buzzwords.filter(function (b) { return picked.indexOf(b.word) !== -1; })
@@ -143,7 +138,6 @@
       list.appendChild(b);
     });
     stage.appendChild(list);
-    skipLink();
   }
 
   function showWords() {
@@ -169,21 +163,18 @@
       ping('buzzwords_picked', picked.join(', '));
       go(3);
     }, picked.length === 0);
-    skipLink();
   }
 
   function showFiller() {
     screen(3, COPY.fillerTitle);
     stage.appendChild(card('', fillerText(), 'bz-card-filler'));
     nextButton(COPY.next, function () { go(4); });
-    skipLink();
   }
 
   function showExample() {
     screen(4, COPY.exampleTitle);
     stage.appendChild(card(COPY.exampleLabel, group.example));
     nextButton(COPY.next, function () { go(5); });
-    skipLink();
   }
 
   function showSwipe() {
@@ -228,7 +219,6 @@
     next = nextButton(COPY.next, function () { go(6); }, !choice);
     paint();
     if (choice && lastCounts) showShare(result, lastCounts);
-    skipLink();
   }
 
   function showShare(target, counts) {
@@ -259,13 +249,22 @@
     });
     stage.appendChild(list);
     stage.appendChild(card(COPY.exampleLabel, group.example));
-    nextButton(COPY.toForm, function () { go(7); });
+    nextButton(COPY.toForm, toForm);
   }
 
-  function showForm() {
-    screen(7);
-    formStep.hidden = false;
-    if (!reachedForm) { reachedForm = true; ping('reached_form', group ? group.id : 'skipped'); }
+  // Last step: go to the sign-up form at the bottom of the page and put the cursor in the first field.
+  function toForm() {
+    var target = document.getElementById('signup');
+    var first = document.getElementById('FIRSTNAME');
+    fillFields();
+    if (target) target.scrollIntoView({ block: 'start' });
+    if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) {} }, 300);
+    reached();
+  }
+  function reached() {
+    if (reachedForm) return;
+    reachedForm = true;
+    ping('reached_form', group ? group.id : 'no_tool');
   }
 
   // Fill the hidden Brevo fields from the visitor's picks.
@@ -277,13 +276,12 @@
     if (words) words.value = picked.join(', ');
   }
 
-  var screens = { 1: showIndustry, 2: showWords, 3: showFiller, 4: showExample, 5: showSwipe, 6: showQuestions, 7: showForm };
+  var screens = { 1: showIndustry, 2: showWords, 3: showFiller, 4: showExample, 5: showSwipe, 6: showQuestions };
 
   function go(n, noScroll) {
-    if (n > 1 && n < 7 && !group) n = 1;
-    if (n > 2 && n < 7 && !picked.length) n = 2;
+    if (n > 1 && !group) n = 1;
+    if (n > 2 && !picked.length) n = 2;
     step = n;
-    formStep.hidden = n !== 7;
     root.setAttribute('data-step', n);
     fillFields();
     screens[n]();
@@ -293,11 +291,21 @@
     if (r.top < 0 || r.top > window.innerHeight * 0.4) {
       try { root.scrollIntoView({ block: 'start' }); } catch (e) { root.scrollIntoView(true); }
     }
-    var h = stage.querySelector('.bz-title') || (n === 7 && formStep.querySelector('.lp-cta'));
+    var h = stage.querySelector('.bz-title');
     if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
   }
 
-  // Load the data; if it can't load, the form simply stays visible as before.
+  // reached_form also fires when the visitor scrolls down to the form without finishing the tool.
+  var formSec = document.getElementById('signup');
+  if (formSec && window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { io.disconnect(); reached(); }
+    }, { threshold: 0.25 });
+    io.observe(formSec);
+  }
+  if (form) form.addEventListener('submit', fillFields, true);
+
+  // Load the data; if it can't load, the tool stays empty and the page works as before.
   var xhr = new XMLHttpRequest();
   xhr.open('GET', root.getAttribute('data-src') || '/buzzwords.json', true);
   xhr.onload = function () {

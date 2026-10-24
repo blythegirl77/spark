@@ -1,7 +1,6 @@
-/* Buzzword Swipe tool (shared by /challenge-a and /challenge-b). Sits in the pink sign-up section. */
-.bz { max-width: 440px; margin: 0 auto; }
+/* Buzzword Swipe tool (shared by /challenge-a and /challenge-b). Sits in the pink hero, under the arrow. */
+.bz { max-width: 440px; margin: clamp(20px, 3vw, 28px) auto 0; scroll-margin-top: 12px; }
 .bz-stage:empty { display: none; }
-.bz-form-step[hidden] { display: none !important; }
 
 .bz-stage {
   padding: 20px 20px 24px;
@@ -12,8 +11,6 @@
   color: var(--ink);
   text-align: left;
 }
-.bz[data-step="7"] .bz-stage { margin-bottom: 20px; padding: 6px 14px; }
-.bz[data-step="7"] .bz-top { margin: 0; }
 
 .bz-top { display: flex; align-items: center; justify-content: space-between; min-height: 44px; margin: -6px 0 8px; }
 .bz-count { margin-left: auto; font-family: var(--font-ui); font-size: .75rem; letter-spacing: .04em; color: #5c6678; }
@@ -92,10 +89,5 @@
   -webkit-tap-highlight-color: transparent;
 }
 .bz-next:disabled { background: #e8b9d6; cursor: default; }
-.bz-skip {
-  display: block; min-height: 44px; margin: 8px auto 0; padding: 0 12px;
-  border: 0; background: none; color: #5c6678;
-  font-family: var(--font-ui); font-size: .8rem; text-decoration: underline; cursor: pointer;
-}
 .bz button:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
 .bz-next:focus-visible { outline-color: var(--ink); }
