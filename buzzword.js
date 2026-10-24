@@ -13,7 +13,7 @@
     next: 'Next',
     skip: 'Skip to sign-up',
     industryTitle: 'What kind of business do you have?',
-    wordsTitle: 'Which of these have you used?',
+    wordsTitle: 'Which of these buzz words have you used?',
     wordsSub: "We've all done it.",
     fillerTitle: 'Put together, they sound like this:',
     exampleTitle: 'Now the same kind of business, without the buzzwords:',
