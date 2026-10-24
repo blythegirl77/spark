@@ -36,6 +36,7 @@
   var q = new URLSearchParams(location.search);
 
   var data, group, picked = [], choice = null, step = 1, reachedForm = false;
+  var lastCounts = null, swipeSeq = 0;
 
   function t(s, vars) {
     return s.replace(/\{(\w+)\}/g, function (m, k) { return vars && vars[k] != null ? vars[k] : m; });
@@ -132,7 +133,7 @@
     var list = el('div', 'bz-options');
     data.groups.forEach(function (g) {
       var b = button('bz-option' + (group && group.id === g.id ? ' is-on' : ''), '', function () {
-        if (!group || group.id !== g.id) { picked = []; choice = null; }
+        if (!group || group.id !== g.id) { picked = []; choice = null; lastCounts = null; }
         group = g;
         ping('industry_picked', g.id);
         go(2);
@@ -194,17 +195,28 @@
       { id: 'filler', label: COPY.fillerLabel, text: fillerText() },
       { id: 'example', label: COPY.exampleLabel, text: group.example }
     ];
+    function paint() {
+      cards.forEach(function (x, i) {
+        x.className = 'bz-card bz-swipe' + (!choice ? '' : options[i].id === choice ? ' is-on' : ' is-off');
+        x.querySelector('.bz-heart').setAttribute('aria-pressed', options[i].id === choice ? 'true' : 'false');
+      });
+      next.disabled = !choice;
+    }
     var cards = options.map(function (o) {
-      var c = card(o.label, o.text, 'bz-swipe' + (choice === o.id ? ' is-on' : ''));
+      var c = card(o.label, o.text, 'bz-swipe');
       var heart = button('bz-heart', '', function () {
-        if (choice) return; // one swipe per visit
-        choice = o.id;
-        cards.forEach(function (x, i) {
-          x.className = 'bz-card bz-swipe' + (options[i].id === choice ? ' is-on' : ' is-off');
+        // Tap the chosen heart again to unselect it, or tap the other one to switch
+        choice = choice === o.id ? null : o.id;
+        lastCounts = null;
+        result.textContent = '';
+        paint();
+        var mine = ++swipeSeq;
+        if (!choice) { ping('swiped', 'none'); return; }
+        pingSwipe(choice, function (counts) {
+          if (mine !== swipeSeq) return; // a newer tap is on its way
+          lastCounts = counts;
+          showShare(result, counts);
         });
-        pingSwipe(o.id, function (counts) { showShare(result, counts); });
-        next.disabled = false;
-        next.focus();
       });
       heart.setAttribute('aria-label', COPY.heartLabel + ': ' + o.label);
       heart.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.3 2.4h2c.7-1.3 2.2-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>';
@@ -212,9 +224,10 @@
       stage.appendChild(c);
       return c;
     });
-    if (choice) cards.forEach(function (x, i) { if (options[i].id !== choice) x.className += ' is-off'; });
     stage.appendChild(result);
     next = nextButton(COPY.next, function () { go(6); }, !choice);
+    paint();
+    if (choice && lastCounts) showShare(result, lastCounts);
     skipLink();
   }
 
