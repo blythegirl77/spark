@@ -146,6 +146,8 @@ u { text-underline-offset: 3px; }
 }
 .sib-title { margin: 0 0 18px; font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; letter-spacing: .04em; color: var(--ink); }
 .sib-sub { margin: 0 0 26px; font-size: .78rem; color: var(--ink); }
+/* Brevo's own styles left-align these; keep the form title and its subline centred */
+#sib-container .sib-title, #sib-container .sib-sub { text-align: center !important; }
 .sib-tag { margin: 0 0 26px; font-size: .78rem; font-style: italic; font-weight: 600; color: var(--ink); }
 .sib-field { padding: 6px 0 !important; }
 #sib-container input.input, #sib-container .input {
