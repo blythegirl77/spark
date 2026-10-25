@@ -19,3 +19,18 @@
     if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, reduce ? 0 : 500);
   });
 })();
+
+// "Start Day 1" buttons: jump to the sign-up form at the bottom and put the cursor in its first field.
+(function () {
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('[data-jump-form]');
+    if (!link) return;
+    var target = document.getElementById('signup');
+    if (!target) return;
+    e.preventDefault();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    var first = target.querySelector('input[type="text"]:not(.input--hidden)');
+    if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (err) {} }, reduce ? 0 : 500);
+  });
+})();

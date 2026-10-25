@@ -63,3 +63,17 @@ body.lp { text-align: center; }
 
 /* Second part of the form heading: smaller, on its own lines */
 .lp-cta-sub { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.15rem); font-weight: 400; line-height: 1.55; }
+
+/* Photo of Lara between paragraphs of the story section (same spot on both pages) */
+.lp-photo.lp-photo-mid { margin: 28px auto; }
+/* Lead-in line of the story ("I'll go first.") */
+.lp-text .lp-lead { font-weight: 600; font-size: clamp(1.15rem, 2.6vw, 1.3rem); }
+/* "Start Day 1" button that jumps to the sign-up form */
+.lp-btn {
+  display: inline-block; margin-top: 24px; min-height: 52px; padding: 14px 36px;
+  border-radius: 999px; background: var(--pink); color: var(--white);
+  font-family: var(--font-display); font-size: 1.05rem; letter-spacing: .1em; text-decoration: none;
+  box-shadow: 4px 5px 0 rgba(22, 28, 36, .2);
+}
+.lp-btn:hover { filter: brightness(.95); }
+.lp-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }

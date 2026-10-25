@@ -30,6 +30,12 @@
     signupSmall: 'One lesson with one question a day, for 7 days. Free.',
     signupButton: 'Send me Day 1'
   };
+  // A page can change any of these words for its own version of the tool, with a JSON object in
+  // the tool's data-copy attribute (e.g. /challenge-b). Anything not given keeps the wording above.
+  try {
+    var pageCopy = JSON.parse(root.getAttribute('data-copy') || 'null');
+    if (pageCopy) for (var key in pageCopy) if (pageCopy.hasOwnProperty(key)) COPY[key] = pageCopy[key];
+  } catch (e) {}
   // Short industry labels for the step 1 buttons (by group id; anything not listed uses its label)
   var SHORT_LABELS = {
     wellness: 'Health & wellness',
@@ -123,7 +129,7 @@
     if (n === 1) {
       // Card intro (the hook), under "Step 1 of 6"
       stage.appendChild(el('h2', 'bz-intro-title', COPY.introTitle));
-      stage.appendChild(el('p', 'bz-intro-sub', COPY.introSub));
+      if (COPY.introSub) stage.appendChild(el('p', 'bz-intro-sub', COPY.introSub));
     }
     if (title) stage.appendChild(el(n === 1 ? 'h3' : 'h2', 'bz-title', title));
     if (sub) stage.appendChild(el('p', 'bz-sub', sub));
@@ -297,6 +303,11 @@
   var formBox = form && form.closest ? form.closest('.sib-form') : null;
   var submitBtn = form && form.querySelector('button[type="submit"]');
   var bottomLabel = submitBtn ? submitBtn.textContent.trim() : '';
+  // Optional card-only wording for the Name placeholder and the consent line (set per page via data-copy)
+  var nameField = document.getElementById('FIRSTNAME');
+  var consentText = form && form.querySelector('.sib-consent p');
+  var bottomPlaceholder = nameField ? nameField.placeholder : '';
+  var bottomConsent = consentText ? consentText.textContent : '';
   var bottomSpot, template, copy;
   if (formBox) {
     bottomSpot = document.createComment('sign-up form home'); // where the real form lives
@@ -368,6 +379,8 @@
     if (!formBox || formBox.parentNode === stage) return;
     formBox.className += ' bz-in-card';
     setButtonText(COPY.signupButton);
+    if (COPY.signupNamePlaceholder && nameField) nameField.placeholder = COPY.signupNamePlaceholder;
+    if (COPY.signupConsent && consentText) consentText.textContent = COPY.signupConsent;
     copy = makeCopy();
     bottomSpot.parentNode.insertBefore(copy, bottomSpot);
     stage.appendChild(formBox);
@@ -376,6 +389,8 @@
     if (!formBox || formBox.parentNode !== stage) return;
     formBox.className = formBox.className.replace(/\s*bz-in-card/g, '');
     setButtonText(bottomLabel);
+    if (nameField) nameField.placeholder = bottomPlaceholder;
+    if (consentText) consentText.textContent = bottomConsent;
     if (copy) {
       // Keep anything typed into the copy, then swap the real form back in
       if (copy.querySelector('#bzc-EMAIL').value || copy.querySelector('#bzc-FIRSTNAME').value) copyToReal(copy);

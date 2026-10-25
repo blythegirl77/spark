@@ -127,3 +127,8 @@
 .bz-in-card #sib-container .entry__choice label * { text-indent: 0 !important; }
 .bz-in-card #sib-container .entry__choice .checkbox { flex: 0 0 auto; position: relative !important; top: 0 !important; left: 0 !important; margin: 1px 0 0 !important; }
 .bz-in-card #sib-container .entry__choice .sib-consent { flex: 1 1 auto; margin: 0 !important; padding: 0 !important; }
+/* In the card the button comes before the consent line, whatever order the page's form uses */
+.bz-in-card form { display: flex; flex-direction: column; }
+.bz-in-card .sib-field-button { order: 2; }
+.bz-in-card .sib-field-optin { order: 3; }
+.bz-in-card .sib-legal { order: 4; }
