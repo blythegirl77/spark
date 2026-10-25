@@ -23,7 +23,6 @@
     swipeTitle: 'Which would you swipe right on?',
     fillerLabel: 'The buzzword version',
     heartLabel: 'Swipe right on this one',
-    shareIndustry: '{p}% of people in {industry} picked the same.',
     shareAll: '{p}% of people picked the same.',
     signupTitle: 'That was the difference between a buzzword and a moment.',
     signupBody: 'Now try it on your own business.',
@@ -50,16 +49,11 @@
     trades: 'Home & trades',
     other: 'Something else'
   };
-  var MIN_VOTES = 20; // below this many swipes, the percentage stays hidden
-
-  var endpoint = root.getAttribute('data-endpoint') || '';
   var stage = root.querySelector('.bz-stage');
   var form = document.getElementById('sib-form');
-  var run = Math.random().toString(36).slice(2, 10); // per page view, kept in memory only (no cookie)
-  var q = new URLSearchParams(location.search);
 
   var data, group, picked = [], choice = null, step = 1;
-  var lastCounts = null, swipeSeq = 0, wordsDone = false;
+  var tally = null, wordsDone = false;
 
   function t(s, vars) {
     return s.replace(/\{(\w+)\}/g, function (m, k) { return vars && vars[k] != null ? vars[k] : m; });
@@ -77,47 +71,9 @@
     return b;
   }
 
-  // ---- Cookieless pings to the Apps Script web app (same endpoint as the visit ping) ----
-  function pingUrl(event, detail) {
-    var p = new URLSearchParams({
-      action: 'tool',
-      event: event,
-      detail: detail || '',
-      industry: group ? group.id : '',
-      page: location.pathname,
-      run: run,
-      utm_campaign: q.get('utm_campaign') || '',
-      utm_content: q.get('utm_content') || ''
-    });
-    return endpoint + '?' + p.toString();
-  }
-  function ping(event, detail) {
-    if (endpoint.indexOf('https://') !== 0) return;
-    var url = pingUrl(event, detail);
-    try {
-      if (window.fetch) {
-        fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true, credentials: 'omit' }).catch(function () {});
-      } else {
-        new Image().src = url;
-      }
-    } catch (e) {}
-  }
-  // The swipe ping also asks for the running totals. Expected reply (JSON):
-  // { "industry": { "example": 12, "filler": 3 }, "all": { "example": 80, "filler": 25 } }
-  function pingSwipe(detail, done) {
-    if (endpoint.indexOf('https://') !== 0) return done(null);
-    var finished = false;
-    function finish(v) { if (!finished) { finished = true; done(v); } }
-    try {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', pingUrl('swiped', detail), true);
-      xhr.timeout = 6000;
-      xhr.onload = function () {
-        try { finish(xhr.status === 200 ? JSON.parse(xhr.responseText) : null); } catch (e) { finish(null); }
-      };
-      xhr.onerror = xhr.ontimeout = function () { finish(null); };
-      xhr.send();
-    } catch (e) { finish(null); }
+  // ---- Step tracking: smmTrack() and smmSwipeTally() come from smm-track.js (loaded first) ----
+  function track(event, detail) {
+    if (window.smmTrack) window.smmTrack(event, detail);
   }
 
   // ---- Screens ----
@@ -171,9 +127,9 @@
     var list = el('div', 'bz-options');
     data.groups.forEach(function (g) {
       var b = button('bz-option' + (group && group.id === g.id ? ' is-on' : ''), '', function () {
-        if (!group || group.id !== g.id) { picked = []; choice = null; lastCounts = null; wordsDone = false; }
+        if (!group || group.id !== g.id) { picked = []; choice = null; wordsDone = false; }
         group = g;
-        ping('industry_picked', g.id);
+        track('industry_picked', g.id);
         go(2);
       });
       b.appendChild(el('span', 'bz-option-label', SHORT_LABELS[g.id] || g.label));
@@ -202,7 +158,7 @@
       picked = group.buzzwords.map(function (b) { return b.word; })
         .filter(function (w) { return picked.indexOf(w) !== -1; });
       wordsDone = true;
-      ping('buzzwords_picked', picked.length ? picked.join(', ') : 'none');
+      track('buzzwords_picked', picked.length ? picked : 'none');
       go(3);
     });
   }
@@ -216,6 +172,7 @@
   function showExample() {
     screen(4, COPY.exampleTitle);
     stage.appendChild(card(COPY.exampleLabel, group.example));
+    track('example_viewed');
     nextButton(COPY.next, function () { go(5); });
   }
 
@@ -240,16 +197,12 @@
       var heart = button('bz-heart', '', function () {
         // Tap the chosen heart again to unselect it, or tap the other one to switch
         choice = choice === o.id ? null : o.id;
-        lastCounts = null;
         result.textContent = '';
         paint();
-        var mine = ++swipeSeq;
-        if (!choice) { ping('swiped', 'none'); return; }
-        pingSwipe(choice, function (counts) {
-          if (mine !== swipeSeq) return; // a newer tap is on its way
-          lastCounts = counts;
-          showShare(result, counts);
-        });
+        if (!choice) return;
+        // Only the first swipe of the visit is recorded (smmTrack ignores later ones)
+        track('swiped', choice === 'example' ? 'moment' : 'buzzword');
+        getTally(function () { showShare(result); });
       });
       heart.setAttribute('aria-label', COPY.heartLabel + ': ' + o.label);
       heart.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.1 4.3 2.4h2c.7-1.3 2.2-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>';
@@ -260,21 +213,28 @@
     stage.appendChild(result);
     next = nextButton(COPY.next, function () { go(6); }, !choice);
     paint();
-    if (choice && lastCounts) showShare(result, lastCounts);
+    if (choice) showShare(result);
   }
 
-  function showShare(target, counts) {
-    function share(c) {
-      if (!c) return null;
-      var a = Number(c.example) || 0, b = Number(c.filler) || 0, total = a + b;
-      if (total < MIN_VOTES) return null;
-      return Math.round(((choice === 'example' ? a : b) / total) * 100);
-    }
-    if (!counts) return;
-    var p = share(counts.industry);
-    if (p != null) { target.textContent = t(COPY.shareIndustry, { p: p, industry: group.label.toLowerCase() }); return; }
-    p = share(counts.all);
-    if (p != null) target.textContent = t(COPY.shareAll, { p: p });
+  // The share of all visitors who swiped right on the same card, from smmSwipeTally().
+  // Fetched once per visit; no number is shown until the web app sends momentPct.
+  var tallyAsked = false, tallyWaiting = [];
+  function getTally(done) {
+    if (tally || !window.smmSwipeTally) return done();
+    tallyWaiting.push(done);
+    if (tallyAsked) return;
+    tallyAsked = true;
+    window.smmSwipeTally().then(function (res) {
+      tally = res;
+      var waiting = tallyWaiting; tallyWaiting = [];
+      waiting.forEach(function (fn) { fn(); });
+    });
+  }
+  function showShare(target) {
+    if (!choice || !tally || tally.momentPct == null || !target.isConnected) { if (target) target.textContent = ''; return; }
+    var moment = Math.round(Number(tally.momentPct));
+    var p = choice === 'example' ? moment : 100 - moment;
+    target.textContent = t(COPY.shareAll, { p: p });
   }
 
   // Step 6: sign up. The page has one real Brevo form (in the section at the bottom). While this
@@ -286,7 +246,7 @@
     stage.appendChild(el('p', 'bz-signup-body', COPY.signupBody));
     stage.appendChild(el('p', 'bz-signup-small', COPY.signupSmall));
     formIntoCard();
-    reached('card', group ? group.id : 'no_tool');
+    track('reached_form');
   }
 
   var formBox = form && form.closest ? form.closest('.sib-form') : null;
@@ -331,6 +291,7 @@
       if (f.checkValidity && !f.checkValidity()) { if (f.reportValidity) f.reportValidity(); return; }
       copyToReal(c);
       fillFields();
+      submitFrom = 'bottom';
       btn.disabled = true;
       submitBtn.click(); // the real form submits through Brevo as usual
       watchResult(c, btn);
@@ -389,15 +350,6 @@
     bottomSpot.parentNode.insertBefore(formBox, bottomSpot);
   }
 
-  // reached_form: once when step 6 shows (detail: industry), and once if the visitor scrolls down
-  // to the bottom form before ever reaching step 6 (detail "no_tool").
-  var reachedSent = {};
-  function reached(where, detail) {
-    if (reachedSent[where] || (where === 'bottom' && reachedSent.card)) return;
-    reachedSent[where] = true;
-    ping('reached_form', detail);
-  }
-
   // Fill the hidden Brevo fields from the visitor's picks.
   function fillFields() {
     if (!form) return;
@@ -426,14 +378,16 @@
     if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
   }
 
-  var formSec = document.getElementById('signup');
-  if (formSec && window.IntersectionObserver) {
-    var io = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting && formBox && formBox.parentNode !== stage) { io.disconnect(); reached('bottom', 'no_tool'); }
-    }, { threshold: 0.25 });
-    io.observe(formSec);
-  }
-  if (form) form.addEventListener('submit', fillFields, true);
+  // form_submitted: when the real form is sent with a name, an email and the consent box ticked
+  // (detail: "card" for the step 6 form, "bottom" for the form at the end of the page).
+  var submitFrom = null;
+  if (form) form.addEventListener('submit', function () {
+    fillFields();
+    var from = submitFrom || (formBox && formBox.parentNode === stage ? 'card' : 'bottom');
+    submitFrom = null;
+    var name = realField('FIRSTNAME'), email = realField('EMAIL'), optin = realField('OPT_IN');
+    if (name && name.value.trim() && email && email.value.trim() && optin && optin.checked) track('form_submitted', from);
+  }, true);
 
   // Load the data; if it can't load, the tool stays empty and the page works as before.
   var xhr = new XMLHttpRequest();
