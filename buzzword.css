@@ -121,11 +121,9 @@
 .bz-in-card .sib-title, .bz-in-card .sib-sub { display: none; }
 .bz-in-card .sib-field-button { padding: 8px 0 14px !important; }
 .bz-in-card .sib-form-message-panel { margin-bottom: 10px !important; }
-/* Consent checkbox to the left of its text */
-.bz-in-card .entry__choice label { display: flex !important; align-items: flex-start; gap: 10px; text-align: left; }
-.bz-in-card .entry__choice .checkbox { flex: 0 0 auto; position: relative !important; top: 0 !important; left: 0 !important; margin: 2px 0 0 !important; }
-.bz-in-card .entry__choice .sib-consent { flex: 1 1 auto; }
-/* Bottom section while the form is up in the card */
-.bz-form-away { max-width: 440px; margin: 0 auto; }
-.bz-form-away[hidden] { display: none; }
-.bz-away-btn { background: var(--white); color: var(--ink); }
+/* Consent checkbox to the left of its text. Brevo's styles give this label a hanging indent
+   (padding plus a negative text-indent); that's reset here so the box and text sit side by side. */
+.bz-in-card #sib-container .entry__choice label { display: flex !important; align-items: flex-start; gap: 10px; padding-left: 0 !important; margin-left: 0 !important; text-indent: 0 !important; text-align: left; }
+.bz-in-card #sib-container .entry__choice label * { text-indent: 0 !important; }
+.bz-in-card #sib-container .entry__choice .checkbox { flex: 0 0 auto; position: relative !important; top: 0 !important; left: 0 !important; margin: 1px 0 0 !important; }
+.bz-in-card #sib-container .entry__choice .sib-consent { flex: 1 1 auto; margin: 0 !important; padding: 0 !important; }

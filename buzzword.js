@@ -28,8 +28,7 @@
     signupTitle: 'That was the difference between a buzzword and a moment.',
     signupBody: 'Most of us were taught to market by trying to impress. This challenge teaches the opposite: finding the moments that make clients think “that’s me.”',
     signupSmall: 'One lesson with one question a day, for 7 days. Free.',
-    signupButton: 'Send me Day 1',
-    awayButton: 'Your sign-up is in the card above'
+    signupButton: 'Send me Day 1'
   };
   // Short industry labels for the step 1 buttons (by group id; anything not listed uses its label)
   var SHORT_LABELS = {
@@ -283,9 +282,10 @@
     if (p != null) target.textContent = t(COPY.shareAll, { p: p });
   }
 
-  // Step 6: sign up. The page has one Brevo form (in the section at the bottom). While this step
-  // shows, that same form is moved into the card (button "Send me Day 1"); on any other step it
-  // goes back to the bottom section, which stays as the fallback.
+  // Step 6: sign up. The page has one real Brevo form (in the section at the bottom). While this
+  // step shows, that form is moved into the card (button "Send me Day 1"), and the bottom section
+  // gets an identical-looking copy that hands its answers to the real form and submits it. Brevo's
+  // script, Tag Manager and the hidden fields only ever deal with the real form.
   function showSignup() {
     screen(6, COPY.signupTitle);
     stage.appendChild(el('p', 'bz-signup-body', COPY.signupBody));
@@ -297,17 +297,65 @@
   var formBox = form && form.closest ? form.closest('.sib-form') : null;
   var submitBtn = form && form.querySelector('button[type="submit"]');
   var bottomLabel = submitBtn ? submitBtn.textContent.trim() : '';
-  var bottomSpot, awayNote;
+  var bottomSpot, template, copy;
   if (formBox) {
-    // Remember where the form lives, and show a pointer there while it's up in the card
-    bottomSpot = document.createComment('sign-up form home');
+    bottomSpot = document.createComment('sign-up form home'); // where the real form lives
     formBox.parentNode.insertBefore(bottomSpot, formBox);
-    awayNote = el('div', 'bz-form-away');
-    awayNote.hidden = true;
-    awayNote.appendChild(button('bz-next bz-away-btn', COPY.awayButton, function () {
-      try { root.scrollIntoView({ block: 'start' }); } catch (e) { root.scrollIntoView(true); }
-    }));
-    formBox.parentNode.insertBefore(awayNote, bottomSpot);
+    template = formBox.cloneNode(true); // untouched markup, taken before Brevo's script runs
+  }
+
+  // The copy shown at the bottom while the real form is in the card. It has no hidden fields and
+  // no names, and its ids are renamed (except sib-container, which the styles use; the real form
+  // comes first on the page, so scripts looking it up by id still find the real one).
+  function realField(id) { return document.getElementById(id); }
+  function makeCopy() {
+    var c = template.cloneNode(true);
+    var drop = c.querySelectorAll('input[type="hidden"], .input--hidden');
+    for (var i = 0; i < drop.length; i++) drop[i].parentNode.removeChild(drop[i]);
+    var withId = c.querySelectorAll('[id]');
+    for (i = 0; i < withId.length; i++) {
+      if (withId[i].id !== 'sib-container') withId[i].id = 'bzc-' + withId[i].id;
+    }
+    var named = c.querySelectorAll('[name]');
+    for (i = 0; i < named.length; i++) named[i].removeAttribute('name');
+    var f = c.querySelector('form');
+    f.removeAttribute('action'); f.removeAttribute('method'); f.removeAttribute('data-type');
+    var btn = c.querySelector('button[type="submit"]');
+    btn.setAttribute('form', f.id);
+    // Start from whatever was already typed
+    c.querySelector('#bzc-FIRSTNAME').value = realField('FIRSTNAME').value;
+    c.querySelector('#bzc-EMAIL').value = realField('EMAIL').value;
+    c.querySelector('#bzc-OPT_IN').checked = realField('OPT_IN').checked;
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (f.checkValidity && !f.checkValidity()) { if (f.reportValidity) f.reportValidity(); return; }
+      copyToReal(c);
+      fillFields();
+      btn.disabled = true;
+      submitBtn.click(); // the real form submits through Brevo as usual
+      watchResult(c, btn);
+    });
+    return c;
+  }
+  function copyToReal(c) {
+    realField('FIRSTNAME').value = c.querySelector('#bzc-FIRSTNAME').value;
+    realField('EMAIL').value = c.querySelector('#bzc-EMAIL').value;
+    realField('OPT_IN').checked = c.querySelector('#bzc-OPT_IN').checked;
+  }
+  // Mirror Brevo's success or error message from the real form onto the copy.
+  function watchResult(c, btn) {
+    var tries = 0;
+    function shown(el) { return el && window.getComputedStyle(el).display !== 'none'; }
+    var timer = setInterval(function () {
+      tries++;
+      var bad = shown(realField('error-message')), good = shown(realField('success-message'));
+      if (bad || good || tries > 50) {
+        clearInterval(timer);
+        btn.disabled = false;
+        var panel = c.querySelector(good ? '#bzc-success-message' : '#bzc-error-message');
+        if ((bad || good) && panel) panel.style.display = 'block';
+      }
+    }, 300);
   }
   function setButtonText(text) {
     if (!submitBtn) return;
@@ -320,15 +368,21 @@
     if (!formBox || formBox.parentNode === stage) return;
     formBox.className += ' bz-in-card';
     setButtonText(COPY.signupButton);
+    copy = makeCopy();
+    bottomSpot.parentNode.insertBefore(copy, bottomSpot);
     stage.appendChild(formBox);
-    awayNote.hidden = false;
   }
   function formToBottom() {
     if (!formBox || formBox.parentNode !== stage) return;
     formBox.className = formBox.className.replace(/\s*bz-in-card/g, '');
     setButtonText(bottomLabel);
+    if (copy) {
+      // Keep anything typed into the copy, then swap the real form back in
+      if (copy.querySelector('#bzc-EMAIL').value || copy.querySelector('#bzc-FIRSTNAME').value) copyToReal(copy);
+      copy.parentNode.removeChild(copy);
+      copy = null;
+    }
     bottomSpot.parentNode.insertBefore(formBox, bottomSpot);
-    awayNote.hidden = true;
   }
 
   // reached_form: once when step 6 shows (detail: industry), and once if the visitor scrolls down
