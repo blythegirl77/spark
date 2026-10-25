@@ -58,7 +58,7 @@ body.lp { text-align: center; }
   .lp-hero h1 { margin-bottom: 10px; font-size: 1.5rem; }
   .lp-hero .lp-sub { font-size: 1rem; line-height: 1.5; }
   .lp-hero .lp-arrow { width: 20px; margin-top: 10px; }
-  .lp-hero .bz { margin-top: 8px; }
+  .lp-hero .bz { margin-top: 20px; }
 }
 
 /* Second part of the form heading: smaller, on its own lines */
