@@ -9,7 +9,7 @@
   // Words shown by the tool (the same on both pages).
   var COPY = {
     introTitle: 'Would a client swipe right on your marketing?',
-    introSub: 'Pick the words you use. See what clients actually hear. About 30 seconds.',
+    introSub: 'See what clients actually hear. Takes about 30 seconds.',
     stepOf: 'Step {n} of 6',
     back: 'Back',
     next: 'Next',
