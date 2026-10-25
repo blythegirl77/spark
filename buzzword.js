@@ -16,7 +16,8 @@
     industryTitle: 'First, what do you do?',
     wordsTitle: 'Which of these buzz words have you used?',
     wordsSub: "We've all done it.",
-    fillerTitle: 'Put together, they sound like this:',
+    fillerTitle: 'Sound familiar? This could be any of a hundred websites.',
+    fillerTitleNone: "Even if you haven't, you've read this a hundred times.",
     exampleTitle: 'Now the same kind of business, without the buzzwords:',
     exampleLabel: 'Example',
     swipeTitle: 'Which would you swipe right on?',
@@ -36,7 +37,7 @@
   var q = new URLSearchParams(location.search);
 
   var data, group, picked = [], choice = null, step = 1, reachedForm = false;
-  var lastCounts = null, swipeSeq = 0;
+  var lastCounts = null, swipeSeq = 0, wordsDone = false;
 
   function t(s, vars) {
     return s.replace(/\{(\w+)\}/g, function (m, k) { return vars && vars[k] != null ? vars[k] : m; });
@@ -119,14 +120,26 @@
     stage.appendChild(b);
     return b;
   }
-  function fillerText() {
-    return group.buzzwords.filter(function (b) { return picked.indexOf(b.word) !== -1; })
-      .map(function (b) { return b.sentence; }).join(' ');
+  // The group's blurb, with the [[markers]] removed. With highlight on, the buzzwords the visitor
+  // picked are marked; markers match buzzwords[].word, ignoring capital letters.
+  function blurb(highlight) {
+    var p = el('p', 'bz-text');
+    var src = group.blurb || '';
+    var re = /\[\[(.+?)\]\]/g, last = 0, m;
+    var mine = picked.map(function (w) { return w.toLowerCase(); });
+    while ((m = re.exec(src))) {
+      if (m.index > last) p.appendChild(document.createTextNode(src.slice(last, m.index)));
+      if (highlight && mine.indexOf(m[1].toLowerCase()) !== -1) p.appendChild(el('mark', 'bz-hl', m[1]));
+      else p.appendChild(document.createTextNode(m[1]));
+      last = re.lastIndex;
+    }
+    if (last < src.length) p.appendChild(document.createTextNode(src.slice(last)));
+    return p;
   }
-  function card(label, text, extraCls) {
+  function card(label, content, extraCls) {
     var c = el('div', 'bz-card' + (extraCls ? ' ' + extraCls : ''));
     if (label) c.appendChild(el('p', 'bz-label', label));
-    c.appendChild(el('p', 'bz-text', text));
+    c.appendChild(typeof content === 'string' ? el('p', 'bz-text', content) : content);
     return c;
   }
 
@@ -135,7 +148,7 @@
     var list = el('div', 'bz-options');
     data.groups.forEach(function (g) {
       var b = button('bz-option' + (group && group.id === g.id ? ' is-on' : ''), '', function () {
-        if (!group || group.id !== g.id) { picked = []; choice = null; lastCounts = null; }
+        if (!group || group.id !== g.id) { picked = []; choice = null; lastCounts = null; wordsDone = false; }
         group = g;
         ping('industry_picked', g.id);
         go(2);
@@ -157,7 +170,6 @@
         if (i === -1) picked.push(b.word); else picked.splice(i, 1);
         c.className = 'bz-chip' + (i === -1 ? ' is-on' : '');
         c.setAttribute('aria-pressed', i === -1 ? 'true' : 'false');
-        next.disabled = picked.length === 0;
       });
       c.setAttribute('aria-pressed', picked.indexOf(b.word) !== -1 ? 'true' : 'false');
       chips.appendChild(c);
@@ -167,14 +179,28 @@
       // Keep the words in the order they're listed, whatever order they were tapped in
       picked = group.buzzwords.map(function (b) { return b.word; })
         .filter(function (w) { return picked.indexOf(w) !== -1; });
-      ping('buzzwords_picked', picked.join(', '));
+      wordsDone = true;
+      ping('buzzwords_picked', picked.length ? picked.join(', ') : 'none');
       go(3);
-    }, picked.length === 0);
+    });
   }
 
   function showFiller() {
-    screen(3, COPY.fillerTitle);
-    stage.appendChild(card('', fillerText(), 'bz-card-filler'));
+    screen(3, picked.length ? COPY.fillerTitle : COPY.fillerTitleNone);
+    stage.appendChild(card('', blurb(true), 'bz-card-filler'));
+    if (picked.length) {
+      // What a client hears, for each picked buzzword
+      var list = el('ul', 'bz-hears');
+      group.buzzwords.forEach(function (b) {
+        if (picked.indexOf(b.word) === -1) return;
+        var li = el('li');
+        li.appendChild(el('span', 'bz-hears-word', '\u201c' + b.word + '\u201d'));
+        li.appendChild(document.createTextNode(' \u2192 '));
+        li.appendChild(el('em', 'bz-hears-line', b.hears));
+        list.appendChild(li);
+      });
+      stage.appendChild(list);
+    }
     nextButton(COPY.next, function () { go(4); });
   }
 
@@ -190,7 +216,7 @@
     result.setAttribute('aria-live', 'polite');
     var next;
     var options = [
-      { id: 'filler', label: COPY.fillerLabel, text: fillerText() },
+      { id: 'filler', label: COPY.fillerLabel, text: blurb(false) },
       { id: 'example', label: COPY.exampleLabel, text: group.example }
     ];
     function paint() {
@@ -287,7 +313,7 @@
 
   function go(n, noScroll) {
     if (n > 1 && !group) n = 1;
-    if (n > 2 && !picked.length) n = 2;
+    if (n > 2 && !wordsDone) n = 2;
     step = n;
     root.setAttribute('data-step', n);
     fillFields();

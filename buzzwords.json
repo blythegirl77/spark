@@ -1,4 +1,5 @@
 {
+  "_howItWorks": "Each group has one 'blurb' that uses every buzzword, marked [[like this]]. The tool shows the whole blurb and highlights the buzzwords the visitor picked. Under it, it shows the 'hears' line for each picked buzzword. Markers match buzzword 'word' values, ignoring capital letters.",
   "questionTemplates": [
     "What exactly do you mean by {word}?",
     "What's an example of that?",
@@ -9,14 +10,15 @@
       "id": "wellness",
       "label": "Health & wellness",
       "who": "massage, yoga, counselling, naturopathy, personal training",
+      "blurb": "At [Business Name], we take a [[holistic]] approach to your health. Step into a [[relaxing]] space designed to help you [[rejuvenate]] and [[release tension]]. Because [[self-care]] isn't a luxury, it's a necessity. Wherever you are on your [[wellness journey]], we're here to help you find [[balance]].",
       "buzzwords": [
-        { "word": "holistic", "sentence": "We take a holistic approach to your wellbeing." },
-        { "word": "relaxing", "sentence": "Unwind in a relaxing, calming space." },
-        { "word": "rejuvenate", "sentence": "Leave feeling rejuvenated and refreshed." },
-        { "word": "self-care", "sentence": "Make self-care a priority." },
-        { "word": "wellness journey", "sentence": "We're here to support your wellness journey." },
-        { "word": "balance", "sentence": "Restore balance to your mind and body." },
-        { "word": "release tension", "sentence": "Release the tension you carry every day." }
+        { "word": "holistic", "hears": "So… the whole body? Isn't that every massage?" },
+        { "word": "relaxing", "hears": "Every spa says that. What's different here?" },
+        { "word": "rejuvenate", "hears": "What does that actually feel like?" },
+        { "word": "self-care", "hears": "I know. I just don't have time." },
+        { "word": "wellness journey", "hears": "I'm not on a journey. My back hurts." },
+        { "word": "balance", "hears": "Balance between what?" },
+        { "word": "release tension", "hears": "Where? And for how long?" }
       ],
       "example": "About twenty minutes in, your shoulders drop half an inch, and you realize you've been holding them up since Tuesday.",
       "steps": [
@@ -29,14 +31,15 @@
       "id": "coaching",
       "label": "Coaching & consulting",
       "who": "life or business coach, consultant, facilitator",
+      "blurb": "I help you [[unlock your potential]] and [[transform]] your business. Together we'll get [[clarity]] on what you really want, so you can build a [[purpose-driven]] business that feels [[aligned]]. I [[empower]] my clients to take their lives to the [[next level]].",
       "buzzwords": [
-        { "word": "unlock your potential", "sentence": "Unlock your full potential." },
-        { "word": "transform", "sentence": "Transform your business and your life." },
-        { "word": "empower", "sentence": "I empower entrepreneurs to step into their power." },
-        { "word": "clarity", "sentence": "Gain clarity on your vision." },
-        { "word": "aligned", "sentence": "Build a business that feels aligned." },
-        { "word": "next level", "sentence": "Take your business to the next level." },
-        { "word": "purpose-driven", "sentence": "Create a purpose-driven brand." }
+        { "word": "unlock your potential", "hears": "What's locked? How would I know it's open?" },
+        { "word": "transform", "hears": "Into what?" },
+        { "word": "empower", "hears": "Empower me to do what, exactly?" },
+        { "word": "clarity", "hears": "Clarity about what?" },
+        { "word": "aligned", "hears": "Everyone says that. I still don't know what it means." },
+        { "word": "next level", "hears": "What level am I on now?" },
+        { "word": "purpose-driven", "hears": "Isn't every business driven by something?" }
       ],
       "example": "Last month a client finally said no to a project she'd been dreading for weeks. Two weeks later she booked one she actually wanted, at a higher rate.",
       "steps": [
@@ -49,14 +52,15 @@
       "id": "creative",
       "label": "Creative services",
       "who": "photographer, designer, writer, artist",
+      "blurb": "At [Business Name], every project starts with your [[creative vision]]. We [[bring your vision to life]] through [[unique]], [[authentic]] storytelling and [[timeless]] imagery that will [[elevate]] your brand. From first call to final delivery, the process is [[seamless]].",
       "buzzwords": [
-        { "word": "creative vision", "sentence": "Every project starts with your creative vision." },
-        { "word": "bring your vision to life", "sentence": "We bring your vision to life." },
-        { "word": "unique", "sentence": "Unique designs for unique brands." },
-        { "word": "timeless", "sentence": "Timeless images you'll treasure forever." },
-        { "word": "authentic", "sentence": "Authentic storytelling that captures who you are." },
-        { "word": "elevate", "sentence": "Elevate your brand with stunning visuals." },
-        { "word": "seamless", "sentence": "A seamless process from concept to delivery." }
+        { "word": "creative vision", "hears": "I don't have a vision. That's why I'm hiring you." },
+        { "word": "bring your vision to life", "hears": "Every photographer says that." },
+        { "word": "unique", "hears": "Unique how? Show me." },
+        { "word": "timeless", "hears": "So… not trendy?" },
+        { "word": "authentic", "hears": "What would inauthentic look like?" },
+        { "word": "elevate", "hears": "Elevate from what, to what?" },
+        { "word": "seamless", "hears": "Until it isn't." }
       ],
       "example": "At a family session, the youngest refused to smile, so I asked him for his grumpiest face. The photo on their fridge now is his sister laughing so hard she's falling over.",
       "steps": [
@@ -69,14 +73,15 @@
       "id": "professional",
       "label": "Professional services",
       "who": "bookkeeper, accountant, lawyer, virtual assistant, real estate",
+      "blurb": "At [Business Name], we're your [[trusted partner]] for growth. Our [[tailored solutions]] [[streamline]] your finances, so you can enjoy [[peace of mind]] all year long. With years of [[expertise]] and a [[results-driven]] approach, we make tax season [[stress-free]].",
       "buzzwords": [
-        { "word": "peace of mind", "sentence": "Enjoy peace of mind knowing you're in good hands." },
-        { "word": "trusted partner", "sentence": "Your trusted partner for growth." },
-        { "word": "tailored solutions", "sentence": "We offer tailored solutions for every client." },
-        { "word": "streamline", "sentence": "We streamline the process so you can focus on what you love." },
-        { "word": "stress-free", "sentence": "We make the whole process stress-free." },
-        { "word": "expertise", "sentence": "Benefit from years of industry expertise." },
-        { "word": "results-driven", "sentence": "Results-driven service you can count on." }
+        { "word": "peace of mind", "hears": "What would I stop worrying about?" },
+        { "word": "trusted partner", "hears": "We just met." },
+        { "word": "tailored solutions", "hears": "Tailored to what?" },
+        { "word": "streamline", "hears": "What's slow right now?" },
+        { "word": "stress-free", "hears": "Nothing about taxes is stress-free." },
+        { "word": "expertise", "hears": "Everyone claims years of expertise." },
+        { "word": "results-driven", "hears": "What results?" }
       ],
       "example": "Last spring a bakery owner told me she hadn't opened a bank statement in four months. By June she was reading her numbers over coffee every Monday, and she knew she could afford Saturday help.",
       "steps": [
@@ -89,14 +94,15 @@
       "id": "beauty",
       "label": "Beauty & personal care",
       "who": "salon, esthetician, nails, pet grooming",
+      "blurb": "At [Business Name], it's time to [[pamper]] yourself in a [[luxurious]] space made just for you. Our expert team will [[transform your look]] and leave you with a radiant [[glow]]. Because [[self-love]] matters, and when you [[feel your best]], your [[confidence]] shines.",
       "buzzwords": [
-        { "word": "pamper", "sentence": "Pamper yourself. You deserve it." },
-        { "word": "glow", "sentence": "Leave with a radiant glow." },
-        { "word": "confidence", "sentence": "Look good, feel confident." },
-        { "word": "self-love", "sentence": "Make time for self-love." },
-        { "word": "luxurious", "sentence": "Indulge in a luxurious experience." },
-        { "word": "feel your best", "sentence": "We help you look and feel your best." },
-        { "word": "transform your look", "sentence": "Transform your look with our expert team." }
+        { "word": "pamper", "hears": "I don't need pampering. I need my roots done." },
+        { "word": "glow", "hears": "From what? For how long?" },
+        { "word": "confidence", "hears": "Confident about what?" },
+        { "word": "self-love", "hears": "That's a lot to ask of a haircut." },
+        { "word": "luxurious", "hears": "Is that code for expensive?" },
+        { "word": "feel your best", "hears": "Everyone promises that." },
+        { "word": "transform your look", "hears": "I don't want to look like someone else." }
       ],
       "example": "Before her daughter's wedding, a client told me she hadn't worn her hair down in ten years. At the reception, she took the clip out for the photos.",
       "steps": [
@@ -109,14 +115,15 @@
       "id": "food",
       "label": "Food & hospitality",
       "who": "café, bakery, caterer, B&B",
+      "blurb": "At [Business Name], we serve [[fresh]], [[homemade]] food [[made with love]], using [[locally sourced]] ingredients whenever possible. Pull up a chair in our [[cozy]] space and enjoy something [[delicious]]. With [[something for everyone]] on the menu, there's always a reason to stop by.",
       "buzzwords": [
-        { "word": "fresh", "sentence": "Fresh ingredients, every day." },
-        { "word": "homemade", "sentence": "Homemade goodness in every bite." },
-        { "word": "cozy", "sentence": "A cozy spot to relax and recharge." },
-        { "word": "made with love", "sentence": "Everything is made with love." },
-        { "word": "locally sourced", "sentence": "Locally sourced whenever possible." },
-        { "word": "delicious", "sentence": "Delicious food for every occasion." },
-        { "word": "something for everyone", "sentence": "Something for everyone on our menu." }
+        { "word": "fresh", "hears": "As opposed to…?" },
+        { "word": "homemade", "hears": "Whose home?" },
+        { "word": "cozy", "hears": "Every café says cozy." },
+        { "word": "made with love", "hears": "Nice. But what does it taste like?" },
+        { "word": "locally sourced", "hears": "From where, exactly?" },
+        { "word": "delicious", "hears": "Wouldn't you say that anyway?" },
+        { "word": "something for everyone", "hears": "So nothing in particular?" }
       ],
       "example": "Every Saturday at 7 a.m., the same retired couple takes the window table. By the time they sit down, his cinnamon bun is warming and her tea is steeping. No order needed.",
       "steps": [
@@ -129,14 +136,15 @@
       "id": "makers",
       "label": "Makers & retail",
       "who": "shop, boutique, handmade, online store",
+      "blurb": "At [Business Name], every piece is [[handcrafted]] with care. Browse our [[curated]] collection of [[one-of-a-kind]] treasures, [[sustainable]] goods and [[unique gifts]] for everyone on your list. [[Quality]] you can feel. [[Shop local]] and support small.",
       "buzzwords": [
-        { "word": "handcrafted", "sentence": "Each piece is handcrafted with care." },
-        { "word": "curated", "sentence": "A curated collection of beautiful things." },
-        { "word": "one-of-a-kind", "sentence": "One-of-a-kind pieces you won't find anywhere else." },
-        { "word": "quality", "sentence": "Quality you can feel." },
-        { "word": "sustainable", "sentence": "Thoughtfully and sustainably made." },
-        { "word": "unique gifts", "sentence": "Unique gifts for everyone on your list." },
-        { "word": "shop local", "sentence": "Shop local and support small." }
+        { "word": "handcrafted", "hears": "By whom? What does that look like?" },
+        { "word": "curated", "hears": "Curated by whom?" },
+        { "word": "one-of-a-kind", "hears": "Every shop on Etsy says that." },
+        { "word": "quality", "hears": "Quality compared to what?" },
+        { "word": "sustainable", "hears": "How, exactly?" },
+        { "word": "unique gifts", "hears": "For who? My impossible-to-shop-for dad?" },
+        { "word": "shop local", "hears": "I want to. But why you?" }
       ],
       "example": "A woman bought one of my mugs for her dad, who drinks his coffee on the porch at 5 a.m. A month later she came back for a second one. He'd started inviting the neighbour.",
       "steps": [
@@ -149,14 +157,15 @@
       "id": "trades",
       "label": "Home & trades",
       "who": "cleaning, renovation, landscaping, organizing",
+      "blurb": "At [Business Name], we're proud to offer [[reliable]] service and [[quality workmanship]] on every project. [[No job too small]]! Our team is [[fully insured]] and brings [[attention to detail]] to everything we do. Let us [[transform your space]]. [[Satisfaction guaranteed]].",
       "buzzwords": [
-        { "word": "reliable", "sentence": "Reliable service you can count on." },
-        { "word": "quality workmanship", "sentence": "Quality workmanship on every job." },
-        { "word": "no job too small", "sentence": "No job too small." },
-        { "word": "fully insured", "sentence": "Fully licensed and insured." },
-        { "word": "attention to detail", "sentence": "Attention to detail in everything we do." },
-        { "word": "satisfaction guaranteed", "sentence": "Your satisfaction is guaranteed." },
-        { "word": "transform your space", "sentence": "Transform your space." }
+        { "word": "reliable", "hears": "So… you'll show up?" },
+        { "word": "quality workmanship", "hears": "What would bad workmanship look like?" },
+        { "word": "no job too small", "hears": "So any job at all? What are you best at?" },
+        { "word": "fully insured", "hears": "I'd hope so." },
+        { "word": "attention to detail", "hears": "Which details?" },
+        { "word": "satisfaction guaranteed", "hears": "Guaranteed how? What if I'm not?" },
+        { "word": "transform your space", "hears": "Into what, though?" }
       ],
       "example": "When we finished her deck, I swept the sawdust out of her flower beds and sent her a photo of the gate latch I'd fixed while I was there. She hadn't asked. She's booked us for the fence in spring.",
       "steps": [
@@ -169,14 +178,15 @@
       "id": "other",
       "label": "Something else",
       "who": "any business",
+      "blurb": "At [Business Name], we're [[passionate]] about what we do. We deliver [[high-quality]] results with [[personalized service]] from start to finish. Our [[customer-focused]] team goes [[above and beyond]] with [[innovative]] solutions. Think of us as your [[one-stop shop]].",
       "buzzwords": [
-        { "word": "passionate", "sentence": "We're passionate about what we do." },
-        { "word": "high-quality", "sentence": "We deliver high-quality results." },
-        { "word": "personalized service", "sentence": "Enjoy personalized service from start to finish." },
-        { "word": "above and beyond", "sentence": "We go above and beyond for every client." },
-        { "word": "customer-focused", "sentence": "Our customer-focused team puts you first." },
-        { "word": "innovative", "sentence": "Innovative solutions for modern businesses." },
-        { "word": "one-stop shop", "sentence": "Your one-stop shop for everything you need." }
+        { "word": "passionate", "hears": "Isn't everyone?" },
+        { "word": "high-quality", "hears": "Nobody says low-quality." },
+        { "word": "personalized service", "hears": "Personalized how?" },
+        { "word": "above and beyond", "hears": "Beyond what?" },
+        { "word": "customer-focused", "hears": "As opposed to…?" },
+        { "word": "innovative", "hears": "What's new about it?" },
+        { "word": "one-stop shop", "hears": "So you do everything? Then what are you best at?" }
       ],
       "example": "Last week a client emailed at 9 p.m., panicking about a deadline. I answered by 9:15, and the next morning she sent me a photo of the finished project.",
       "steps": [

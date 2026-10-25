@@ -96,3 +96,12 @@
 .bz-intro-title { margin: 0 0 6px; font-family: var(--font-body); font-weight: 600; font-size: clamp(1.3rem, 5.6vw, 1.6rem); line-height: 1.3; letter-spacing: .02em; color: var(--ink); }
 .bz-intro-sub { margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid #e3e6ec; font-family: var(--font-ui); font-size: .9rem; line-height: 1.5; color: #3c4858; }
 .bz-intro-sub + .bz-top { margin-top: 0; }
+
+/* Step 3: blurb with the visitor's buzzwords highlighted, then what a client hears */
+.bz-hl { padding: 0 3px; border-radius: 4px; background: #f7c9e4; color: var(--ink); box-shadow: inset 0 -2px 0 var(--pink); }
+.bz-hears { margin: 0 0 16px; padding: 0; list-style: none; }
+.bz-hears li { margin: 0 0 10px; font-family: var(--font-ui); font-size: .92rem; line-height: 1.5; color: var(--ink); }
+.bz-hears-word { font-weight: 600; }
+.bz-hears li { color: var(--pink); }
+.bz-hears-word, .bz-hears-line { color: var(--ink); }
+.bz-hears-line { font-style: italic; color: #3c4858; }
