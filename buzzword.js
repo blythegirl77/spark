@@ -44,9 +44,6 @@
     other: 'Something else'
   };
   var MIN_VOTES = 20; // below this many swipes, the percentage stays hidden
-  // Step 6 shows only email once First name is optional in both Brevo forms (A and B).
-  // Until then the Name field stays, so Brevo doesn't reject the signup for a missing required field.
-  var HIDE_NAME_IN_CARD = false;
 
   var endpoint = root.getAttribute('data-endpoint') || '';
   var stage = root.querySelector('.bz-stage');
@@ -287,8 +284,8 @@
   }
 
   // Step 6: sign up. The page has one Brevo form (in the section at the bottom). While this step
-  // shows, that same form is moved into the card (Name hidden, button "Send me Day 1"); on any
-  // other step it goes back to the bottom section, which stays as the fallback.
+  // shows, that same form is moved into the card (button "Send me Day 1"); on any other step it
+  // goes back to the bottom section, which stays as the fallback.
   function showSignup() {
     screen(6, COPY.signupTitle);
     stage.appendChild(el('p', 'bz-signup-body', COPY.signupBody));
@@ -298,8 +295,6 @@
   }
 
   var formBox = form && form.closest ? form.closest('.sib-form') : null;
-  var nameField = document.getElementById('FIRSTNAME');
-  var nameBlock = nameField && nameField.closest ? nameField.closest('.sib-field') : null;
   var submitBtn = form && form.querySelector('button[type="submit"]');
   var bottomLabel = submitBtn ? submitBtn.textContent.trim() : '';
   var bottomSpot, awayNote;
@@ -324,10 +319,6 @@
   function formIntoCard() {
     if (!formBox || formBox.parentNode === stage) return;
     formBox.className += ' bz-in-card';
-    if (HIDE_NAME_IN_CARD) {
-      if (nameBlock) nameBlock.hidden = true;
-      if (nameField) { nameField.required = false; nameField.removeAttribute('data-required'); }
-    }
     setButtonText(COPY.signupButton);
     stage.appendChild(formBox);
     awayNote.hidden = false;
@@ -335,8 +326,6 @@
   function formToBottom() {
     if (!formBox || formBox.parentNode !== stage) return;
     formBox.className = formBox.className.replace(/\s*bz-in-card/g, '');
-    if (nameBlock) nameBlock.hidden = false;
-    if (nameField) { nameField.required = true; nameField.setAttribute('data-required', 'true'); }
     setButtonText(bottomLabel);
     bottomSpot.parentNode.insertBefore(formBox, bottomSpot);
     awayNote.hidden = true;

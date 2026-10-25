@@ -113,7 +113,7 @@
 .bz-hears-word, .bz-hears-line { color: var(--ink); }
 .bz-hears-line { font-style: italic; color: #3c4858; }
 
-/* Step 6: sign-up copy, and the page's Brevo form moved into the card (no box, no title, no Name) */
+/* Step 6: sign-up copy, and the page's Brevo form moved into the card (no box, no title) */
 .bz-signup-body { margin: 0 0 10px; font-family: var(--font-body); font-size: 1.02rem; line-height: 1.6; letter-spacing: .02em; }
 .bz-signup-small { margin: 0 0 14px; font-family: var(--font-ui); font-size: .82rem; color: #5c6678; }
 .bz-in-card [hidden] { display: none !important; }
@@ -121,6 +121,10 @@
 .bz-in-card .sib-title, .bz-in-card .sib-sub { display: none; }
 .bz-in-card .sib-field-button { padding: 8px 0 14px !important; }
 .bz-in-card .sib-form-message-panel { margin-bottom: 10px !important; }
+/* Consent checkbox to the left of its text */
+.bz-in-card .entry__choice label { display: flex !important; align-items: flex-start; gap: 10px; text-align: left; }
+.bz-in-card .entry__choice .checkbox { flex: 0 0 auto; position: relative !important; top: 0 !important; left: 0 !important; margin: 2px 0 0 !important; }
+.bz-in-card .entry__choice .sib-consent { flex: 1 1 auto; }
 /* Bottom section while the form is up in the card */
 .bz-form-away { max-width: 440px; margin: 0 auto; }
 .bz-form-away[hidden] { display: none; }
