@@ -47,7 +47,17 @@
     document.body.appendChild(banner);
   }
 
-  if (!read()) show();
+  // No choice saved yet: show the banner once the visitor starts scrolling, so the first screen stays clear.
+  // Nothing is tracked in the meantime (consent stays denied until they accept).
+  if (!read()) {
+    var onScroll = function () {
+      if ((window.pageYOffset || document.documentElement.scrollTop || 0) < 40) return;
+      window.removeEventListener('scroll', onScroll);
+      if (!read()) show();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // already scrolled down (e.g. coming back to the page)
+  }
 
   document.addEventListener('click', function (e) {
     if (e.target.closest && e.target.closest('[data-cookie-settings]')) show();

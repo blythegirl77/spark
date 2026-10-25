@@ -240,8 +240,19 @@ u { text-underline-offset: 3px; }
   cursor: pointer;
 }
 @media (max-width: 560px) {
-  .consent-actions { justify-content: stretch; }
-  .consent-btn { flex: 1; }
+  /* Phones: a slim strip along the bottom edge, so it covers as little of the page as possible */
+  .consent-banner {
+    left: 0; right: 0; bottom: 0;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    border-width: 2px 0 0;
+    border-radius: 0;
+    box-shadow: 0 -3px 0 rgba(22, 28, 36, .12);
+    font-size: .7rem;
+    line-height: 1.35;
+  }
+  .consent-banner p { margin: 0 0 6px; }
+  .consent-actions { justify-content: stretch; gap: 8px; }
+  .consent-btn { flex: 1; min-height: 36px; padding: 4px 12px; font-size: .82rem; }
 }
 
 /* Privacy policy page */

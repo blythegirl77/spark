@@ -53,9 +53,9 @@ body.lp { text-align: center; }
   .lp-top { padding-top: 18px; padding-bottom: 22px; }
   .lp-top .logo { width: 116px; }
   .lp-top .hero-cta { margin-top: 14px; padding: 13px 28px; }
-  .lp-hero { padding-top: 18px; padding-bottom: 36px; }
+  .lp-hero { padding-top: 14px; padding-bottom: 36px; }
   .lp-hero h1 { margin-bottom: 10px; font-size: 1.5rem; }
   .lp-hero .lp-sub { font-size: 1rem; line-height: 1.5; }
   .lp-hero .lp-arrow { width: 20px; margin-top: 10px; }
-  .lp-hero .bz { margin-top: 12px; }
+  .lp-hero .bz { margin-top: 8px; }
 }
