@@ -8,12 +8,12 @@
 
   // Words shown by the tool (the same on both pages).
   var COPY = {
-    introTitle: 'Would a client swipe right on your marketing?',
-    introSub: 'See what clients actually hear. Takes about 30 seconds.',
+    introTitle: 'Find out in 30 seconds.',
+    introSub: '',
     stepOf: 'Step {n} of 6',
     back: 'Back',
     next: 'Next',
-    industryTitle: 'First, what do you do?',
+    industryTitle: 'What do you do?',
     wordsTitle: 'Which of these buzz words have you used?',
     wordsSub: "We've all done it.",
     fillerTitle: 'Sound familiar? This could be any of a hundred websites.',
@@ -26,9 +26,11 @@
     shareIndustry: '{p}% of people in {industry} picked the same.',
     shareAll: '{p}% of people picked the same.',
     signupTitle: 'That was the difference between a buzzword and a moment.',
-    signupBody: 'Most of us were taught to market by trying to impress. This micro course teaches the opposite: finding the moments that make clients think “that’s me.”',
-    signupSmall: 'One lesson with one question a day, for 7 days. Free.',
-    signupButton: 'Send me Day 1'
+    signupBody: 'Now try it on your own business.',
+    signupSmall: 'Free \u00b7 7 days \u00b7 15 min a day \u00b7 AI feedback on your writing',
+    signupButton: 'Send me Day 1',
+    signupNamePlaceholder: 'First name',
+    signupConsent: 'I agree to get the course emails and accept the privacy statement.'
   };
   // A page can change any of these words for its own version of the tool, with a JSON object in
   // the tool's data-copy attribute (e.g. /challenge-b). Anything not given keeps the wording above.
@@ -208,19 +210,6 @@
   function showFiller() {
     screen(3, picked.length ? COPY.fillerTitle : COPY.fillerTitleNone);
     stage.appendChild(card('', blurb(true), 'bz-card-filler'));
-    if (picked.length) {
-      // What a client hears, for each picked buzzword
-      var list = el('ul', 'bz-hears');
-      group.buzzwords.forEach(function (b) {
-        if (picked.indexOf(b.word) === -1) return;
-        var li = el('li');
-        li.appendChild(el('span', 'bz-hears-word', '\u201c' + b.word + '\u201d'));
-        li.appendChild(document.createTextNode(' \u2192 '));
-        li.appendChild(el('em', 'bz-hears-line', b.hears));
-        list.appendChild(li);
-      });
-      stage.appendChild(list);
-    }
     nextButton(COPY.next, function () { go(4); });
   }
 

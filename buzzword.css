@@ -104,14 +104,8 @@
 .bz-option-label { font-size: .95rem; line-height: 1.25; }
 .bz-options .bz-option:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
-/* Step 3: blurb with the visitor's buzzwords highlighted, then what a client hears */
+/* Step 3: blurb with the visitor's buzzwords highlighted */
 .bz-hl { padding: 0 3px; border-radius: 4px; background: #f7c9e4; color: var(--ink); box-shadow: inset 0 -2px 0 var(--pink); }
-.bz-hears { margin: 0 0 16px; padding: 0; list-style: none; }
-.bz-hears li { margin: 0 0 10px; font-family: var(--font-ui); font-size: .92rem; line-height: 1.5; color: var(--ink); }
-.bz-hears-word { font-weight: 600; }
-.bz-hears li { color: var(--pink); }
-.bz-hears-word, .bz-hears-line { color: var(--ink); }
-.bz-hears-line { font-style: italic; color: #3c4858; }
 
 /* Step 6: sign-up copy, and the page's Brevo form moved into the card (no box, no title) */
 .bz-signup-body { margin: 0 0 10px; font-family: var(--font-body); font-size: 1.02rem; line-height: 1.6; letter-spacing: .02em; }
