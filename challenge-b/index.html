@@ -43,6 +43,8 @@
   <link rel="stylesheet" href="/style.css?v=16">
   <link rel="stylesheet" href="/landing.css?v=12">
   <link rel="stylesheet" href="/buzzword.css?v=12">
+  <!-- Visit ping and Buzzword Swipe step tracking (cookieless). Early so quick visits still count. -->
+  <script defer src="/smm-track.js?v=2"></script>
 </head>
 <body class="lp">
   <!-- Google Tag Manager (noscript) -->
@@ -198,7 +200,6 @@
   <script src="/consent.js?v=5"></script>
   <script src="/attribution.js?v=6"></script>
   <script src="/cta.js?v=4"></script>
-  <script src="/smm-track.js?v=1"></script>
   <script src="/buzzword.js?v=17"></script>
 
   <!-- Brevo form script (handles submit, validation and the success/error messages) -->
@@ -215,44 +216,5 @@
     var AUTOHIDE = Boolean(0);
   </script>
   <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
-  <!-- Spark My Marketing — cookieless visit ping (sends to the Apps Script web app; no cookies, no consent needed) -->
-  <script>
-  (function () {
-    try {
-      var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyeWHm1OKpKIgedWI3Hc1NwlnSYwPKy1vIF-GIys6JGUEjYF1lH0sQYTh99Vf-9E7A/exec';
-      if (WEBAPP_URL.indexOf('https://') !== 0) return; // not set up yet
-      var q = new URLSearchParams(location.search);
-      var ua = navigator.userAgent || '';
-      var app = /Instagram/i.test(ua) ? 'instagram'
-              : /FBAN|FBAV|FB_IAB/i.test(ua) ? 'facebook'
-              : 'browser';
-      var dev = /Mobi|Android|iPhone|iPad/i.test(ua) ? 'mobile' : 'desktop';
-      var ref = '';
-      try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
-
-      var params = new URLSearchParams({
-        action: 'visit',
-        page: location.pathname,
-        utm_source: q.get('utm_source') || '',
-        utm_medium: q.get('utm_medium') || '',
-        utm_campaign: q.get('utm_campaign') || '',
-        utm_content: q.get('utm_content') || '',
-        utm_term: q.get('utm_term') || '',
-        ref: ref,
-        dev: dev,
-        app: app
-      });
-      var url = WEBAPP_URL + '?' + params.toString();
-
-      // A plain GET, so it reaches doGet (sendBeacon would POST and hit the webhook handler).
-      if (window.fetch) {
-        fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true, credentials: 'omit' })
-          .catch(function () {});
-      } else {
-        new Image().src = url;
-      }
-    } catch (e) {}
-  })();
-  </script>
 </body>
 </html>

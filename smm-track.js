@@ -55,6 +55,33 @@
     } catch (e) {}
   };
 
+  // Page-load visit ping, with the same visit_id as the steps.
+  // This replaces the separate visit snippet: remove that one from both pages.
+  try {
+    var ref = '';
+    try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+    var vp = new URLSearchParams({
+      action: 'visit',
+      vid: vid,
+      page: location.pathname,
+      utm_source: q.get('utm_source') || '',
+      utm_medium: q.get('utm_medium') || '',
+      utm_campaign: q.get('utm_campaign') || '',
+      utm_content: q.get('utm_content') || '',
+      utm_term: q.get('utm_term') || '',
+      ref: ref,
+      dev: dev,
+      app: app
+    });
+    var vurl = WEBAPP_URL + '?' + vp.toString();
+    if (window.fetch) {
+      fetch(vurl, { method: 'GET', mode: 'no-cors', keepalive: true, credentials: 'omit' })
+        .catch(function () {});
+    } else {
+      new Image().src = vurl;
+    }
+  } catch (e) {}
+
   // Returns a Promise of { n, moment, buzzword, momentPct } or { n } (too few
   // swipes yet), or null on any error. Never show a number when momentPct is missing.
   window.smmSwipeTally = function () {
