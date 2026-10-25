@@ -10,7 +10,7 @@
       "id": "wellness",
       "label": "Health & wellness",
       "who": "massage, yoga, counselling, naturopathy, personal training",
-      "blurb": "At [Business Name], we take a [[holistic]] approach to your health. Step into a [[relaxing]] space designed to help you [[rejuvenate]] and [[release tension]]. Because [[self-care]] isn't a luxury, it's a necessity. Wherever you are on your [[wellness journey]], we're here to help you find [[balance]].",
+      "blurb": "At My Business, we take a [[holistic]] approach to your health. Step into a [[relaxing]] space designed to help you [[rejuvenate]] and [[release tension]]. Because [[self-care]] isn't a luxury, it's a necessity. Wherever you are on your [[wellness journey]], we're here to help you find [[balance]].",
       "buzzwords": [
         { "word": "holistic", "hears": "So… the whole body? Isn't that every massage?" },
         { "word": "relaxing", "hears": "Every spa says that. What's different here?" },
@@ -52,7 +52,7 @@
       "id": "creative",
       "label": "Creative services",
       "who": "photographer, designer, writer, artist",
-      "blurb": "At [Business Name], every project starts with your [[creative vision]]. We [[bring your vision to life]] through [[unique]], [[authentic]] storytelling and [[timeless]] imagery that will [[elevate]] your brand. From first call to final delivery, the process is [[seamless]].",
+      "blurb": "At My Business, every project starts with your [[creative vision]]. We [[bring your vision to life]] through [[unique]], [[authentic]] storytelling and [[timeless]] imagery that will [[elevate]] your brand. From first call to final delivery, the process is [[seamless]].",
       "buzzwords": [
         { "word": "creative vision", "hears": "I don't have a vision. That's why I'm hiring you." },
         { "word": "bring your vision to life", "hears": "Every photographer says that." },
@@ -73,7 +73,7 @@
       "id": "professional",
       "label": "Professional services",
       "who": "bookkeeper, accountant, lawyer, virtual assistant, real estate",
-      "blurb": "At [Business Name], we're your [[trusted partner]] for growth. Our [[tailored solutions]] [[streamline]] your finances, so you can enjoy [[peace of mind]] all year long. With years of [[expertise]] and a [[results-driven]] approach, we make tax season [[stress-free]].",
+      "blurb": "At My Business, we're your [[trusted partner]] for growth. Our [[tailored solutions]] [[streamline]] your finances, so you can enjoy [[peace of mind]] all year long. With years of [[expertise]] and a [[results-driven]] approach, we make tax season [[stress-free]].",
       "buzzwords": [
         { "word": "peace of mind", "hears": "What would I stop worrying about?" },
         { "word": "trusted partner", "hears": "We just met." },
@@ -94,7 +94,7 @@
       "id": "beauty",
       "label": "Beauty & personal care",
       "who": "salon, esthetician, nails, pet grooming",
-      "blurb": "At [Business Name], it's time to [[pamper]] yourself in a [[luxurious]] space made just for you. Our expert team will [[transform your look]] and leave you with a radiant [[glow]]. Because [[self-love]] matters, and when you [[feel your best]], your [[confidence]] shines.",
+      "blurb": "At My Business, it's time to [[pamper]] yourself in a [[luxurious]] space made just for you. Our expert team will [[transform your look]] and leave you with a radiant [[glow]]. Because [[self-love]] matters, and when you [[feel your best]], your [[confidence]] shines.",
       "buzzwords": [
         { "word": "pamper", "hears": "I don't need pampering. I need my roots done." },
         { "word": "glow", "hears": "From what? For how long?" },
@@ -115,7 +115,7 @@
       "id": "food",
       "label": "Food & hospitality",
       "who": "café, bakery, caterer, B&B",
-      "blurb": "At [Business Name], we serve [[fresh]], [[homemade]] food [[made with love]], using [[locally sourced]] ingredients whenever possible. Pull up a chair in our [[cozy]] space and enjoy something [[delicious]]. With [[something for everyone]] on the menu, there's always a reason to stop by.",
+      "blurb": "At My Business, we serve [[fresh]], [[homemade]] food [[made with love]], using [[locally sourced]] ingredients whenever possible. Pull up a chair in our [[cozy]] space and enjoy something [[delicious]]. With [[something for everyone]] on the menu, there's always a reason to stop by.",
       "buzzwords": [
         { "word": "fresh", "hears": "As opposed to…?" },
         { "word": "homemade", "hears": "Whose home?" },
@@ -136,7 +136,7 @@
       "id": "makers",
       "label": "Makers & retail",
       "who": "shop, boutique, handmade, online store",
-      "blurb": "At [Business Name], every piece is [[handcrafted]] with care. Browse our [[curated]] collection of [[one-of-a-kind]] treasures, [[sustainable]] goods and [[unique gifts]] for everyone on your list. [[Quality]] you can feel. [[Shop local]] and support small.",
+      "blurb": "At My Business, every piece is [[handcrafted]] with care. Browse our [[curated]] collection of [[one-of-a-kind]] treasures, [[sustainable]] goods and [[unique gifts]] for everyone on your list. [[Quality]] you can feel. [[Shop local]] and support small.",
       "buzzwords": [
         { "word": "handcrafted", "hears": "By whom? What does that look like?" },
         { "word": "curated", "hears": "Curated by whom?" },
@@ -157,7 +157,7 @@
       "id": "trades",
       "label": "Home & trades",
       "who": "cleaning, renovation, landscaping, organizing",
-      "blurb": "At [Business Name], we're proud to offer [[reliable]] service and [[quality workmanship]] on every project. [[No job too small]]! Our team is [[fully insured]] and brings [[attention to detail]] to everything we do. Let us [[transform your space]]. [[Satisfaction guaranteed]].",
+      "blurb": "At My Business, we're proud to offer [[reliable]] service and [[quality workmanship]] on every project. [[No job too small]]! Our team is [[fully insured]] and brings [[attention to detail]] to everything we do. Let us [[transform your space]]. [[Satisfaction guaranteed]].",
       "buzzwords": [
         { "word": "reliable", "hears": "So… you'll show up?" },
         { "word": "quality workmanship", "hears": "What would bad workmanship look like?" },
@@ -178,7 +178,7 @@
       "id": "other",
       "label": "Something else",
       "who": "any business",
-      "blurb": "At [Business Name], we're [[passionate]] about what we do. We deliver [[high-quality]] results with [[personalized service]] from start to finish. Our [[customer-focused]] team goes [[above and beyond]] with [[innovative]] solutions. Think of us as your [[one-stop shop]].",
+      "blurb": "At My Business, we're [[passionate]] about what we do. We deliver [[high-quality]] results with [[personalized service]] from start to finish. Our [[customer-focused]] team goes [[above and beyond]] with [[innovative]] solutions. Think of us as your [[one-stop shop]].",
       "buzzwords": [
         { "word": "passionate", "hears": "Isn't everyone?" },
         { "word": "high-quality", "hears": "Nobody says low-quality." },
