@@ -28,6 +28,18 @@
     questionsTitle: 'How to get from one to the other: ask three questions.',
     toForm: 'Find your version'
   };
+  // Short industry labels for the step 1 buttons (by group id; anything not listed uses its label)
+  var SHORT_LABELS = {
+    wellness: 'Health & wellness',
+    coaching: 'Coaching',
+    creative: 'Creative',
+    professional: 'Professional services',
+    beauty: 'Beauty & care',
+    food: 'Food & hospitality',
+    makers: 'Makers & retail',
+    trades: 'Home & trades',
+    other: 'Something else'
+  };
   var MIN_VOTES = 20; // below this many swipes, the percentage stays hidden
 
   var endpoint = root.getAttribute('data-endpoint') || '';
@@ -101,15 +113,15 @@
   // ---- Screens ----
   function screen(n, title, sub) {
     stage.innerHTML = '';
-    if (n === 1) {
-      // Card intro, above "Step 1 of 6"
-      stage.appendChild(el('h2', 'bz-intro-title', COPY.introTitle));
-      stage.appendChild(el('p', 'bz-intro-sub', COPY.introSub));
-    }
-    var top = el('div', 'bz-top');
+    var top = el('div', 'bz-top' + (n === 1 ? ' bz-top-first' : ''));
     if (n > 1) top.appendChild(button('bz-back', '‹ ' + COPY.back, function () { go(n - 1); }));
     top.appendChild(el('span', 'bz-count', t(COPY.stepOf, { n: n })));
     stage.appendChild(top);
+    if (n === 1) {
+      // Card intro (the hook), under "Step 1 of 6"
+      stage.appendChild(el('h2', 'bz-intro-title', COPY.introTitle));
+      stage.appendChild(el('p', 'bz-intro-sub', COPY.introSub));
+    }
     if (title) stage.appendChild(el(n === 1 ? 'h3' : 'h2', 'bz-title', title));
     if (sub) stage.appendChild(el('p', 'bz-sub', sub));
     return stage;
@@ -153,8 +165,7 @@
         ping('industry_picked', g.id);
         go(2);
       });
-      b.appendChild(el('span', 'bz-option-label', g.label));
-      b.appendChild(el('span', 'bz-option-who', g.who));
+      b.appendChild(el('span', 'bz-option-label', SHORT_LABELS[g.id] || g.label));
       list.appendChild(b);
     });
     stage.appendChild(list);

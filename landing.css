@@ -46,12 +46,13 @@ body.lp { text-align: center; }
 .nb { white-space: nowrap; }
 
 /* Original header (stacked logo + button) on the landing pages */
+.lp-top .logo { width: clamp(140px, 21vw, 231px); } /* 70% of the home page logo */
 .lp-top { padding-bottom: clamp(40px, 6vw, 64px); }
 
 /* Phones: tighter header and hero so the Buzzword Swipe card title shows on the first screen */
 @media (max-width: 560px) {
   .lp-top { padding-top: 18px; padding-bottom: 22px; }
-  .lp-top .logo { width: 116px; }
+  .lp-top .logo { width: 81px; }
   .lp-top .hero-cta { margin-top: 14px; padding: 13px 28px; }
   .lp-hero { padding-top: 14px; padding-bottom: 36px; }
   .lp-hero h1 { margin-bottom: 10px; font-size: 1.5rem; }

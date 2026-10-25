@@ -94,8 +94,14 @@
 
 /* Card intro (step 1 only) */
 .bz-intro-title { margin: 0 0 6px; font-family: var(--font-body); font-weight: 600; font-size: clamp(1.3rem, 5.6vw, 1.6rem); line-height: 1.3; letter-spacing: .02em; color: var(--ink); }
-.bz-intro-sub { margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid #e3e6ec; font-family: var(--font-ui); font-size: .9rem; line-height: 1.5; color: #3c4858; }
-.bz-intro-sub + .bz-top { margin-top: 0; }
+.bz-intro-sub { margin: 0 0 16px; font-family: var(--font-ui); font-size: .9rem; line-height: 1.5; color: #3c4858; }
+/* Step 1: the step count is small text at the top right, above the hook */
+.bz-top-first { min-height: 0; margin: -4px 0 8px; }
+/* Step 1: industries as a 2-column grid of compact buttons */
+.bz-options { grid-template-columns: 1fr 1fr; gap: 8px; }
+.bz-option { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 8px 10px; text-align: center; }
+.bz-option-label { font-size: .95rem; line-height: 1.25; }
+.bz-options .bz-option:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
 /* Step 3: blurb with the visitor's buzzwords highlighted, then what a client hears */
 .bz-hl { padding: 0 3px; border-radius: 4px; background: #f7c9e4; color: var(--ink); box-shadow: inset 0 -2px 0 var(--pink); }
