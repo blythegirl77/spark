@@ -26,7 +26,7 @@
     shareIndustry: '{p}% of people in {industry} picked the same.',
     shareAll: '{p}% of people picked the same.',
     signupTitle: 'That was the difference between a buzzword and a moment.',
-    signupBody: 'Most of us were taught to market by trying to impress. This mini course teaches the opposite: finding the moments that make clients think “that’s me.”',
+    signupBody: 'Most of us were taught to market by trying to impress. This micro course teaches the opposite: finding the moments that make clients think “that’s me.”',
     signupSmall: 'One lesson with one question a day, for 7 days. Free.',
     signupButton: 'Send me Day 1'
   };
