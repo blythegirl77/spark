@@ -1,7 +1,7 @@
 // Buzzword Swipe: the six-step tool under the hero of /challenge-a and /challenge-b.
 // Both pages load this same file, buzzword.css and buzzwords.json, so the tool is identical on both.
-// The last step leads to the page's own Brevo form at the bottom, and this script fills that form's
-// hidden INDUSTRY and BUZZWORDS fields. Written in plain ES5 for in-app browsers.
+// Step 6 is the sign-up: the page's own Brevo form is moved into the card, and this script fills
+// its hidden INDUSTRY and BUZZWORDS fields. Written in plain ES5 for in-app browsers.
 (function () {
   var root = document.getElementById('buzzword-swipe');
   if (!root) return;
@@ -25,8 +25,11 @@
     heartLabel: 'Swipe right on this one',
     shareIndustry: '{p}% of people in {industry} picked the same.',
     shareAll: '{p}% of people picked the same.',
-    questionsTitle: 'How to get from one to the other: ask three questions.',
-    toForm: 'Find your version'
+    signupTitle: 'That was the difference between a buzzword and a moment.',
+    signupBody: 'Most of us were taught to market by trying to impress. This challenge teaches the opposite: finding the moments that make clients think “that’s me.”',
+    signupSmall: 'One lesson with one question a day, for 7 days. Free.',
+    signupButton: 'Send me Day 1',
+    awayButton: 'Your sign-up is in the card above'
   };
   // Short industry labels for the step 1 buttons (by group id; anything not listed uses its label)
   var SHORT_LABELS = {
@@ -41,6 +44,9 @@
     other: 'Something else'
   };
   var MIN_VOTES = 20; // below this many swipes, the percentage stays hidden
+  // Step 6 shows only email once First name is optional in both Brevo forms (A and B).
+  // Until then the Name field stays, so Brevo doesn't reject the signup for a missing required field.
+  var HIDE_NAME_IN_CARD = false;
 
   var endpoint = root.getAttribute('data-endpoint') || '';
   var stage = root.querySelector('.bz-stage');
@@ -48,7 +54,7 @@
   var run = Math.random().toString(36).slice(2, 10); // per page view, kept in memory only (no cookie)
   var q = new URLSearchParams(location.search);
 
-  var data, group, picked = [], choice = null, step = 1, reachedForm = false;
+  var data, group, picked = [], choice = null, step = 1;
   var lastCounts = null, swipeSeq = 0, wordsDone = false;
 
   function t(s, vars) {
@@ -112,6 +118,7 @@
 
   // ---- Screens ----
   function screen(n, title, sub) {
+    formToBottom(); // put the form back before clearing the card, so it's never wiped
     stage.innerHTML = '';
     var top = el('div', 'bz-top' + (n === 1 ? ' bz-top-first' : ''));
     if (n > 1) top.appendChild(button('bz-back', '‹ ' + COPY.back, function () { go(n - 1); }));
@@ -279,36 +286,69 @@
     if (p != null) target.textContent = t(COPY.shareAll, { p: p });
   }
 
-  function showQuestions() {
-    screen(6, COPY.questionsTitle);
-    var focus = group.steps[0] && group.steps[0].focus;
-    var list = el('ol', 'bz-questions');
-    data.questionTemplates.forEach(function (tpl, i) {
-      var s = group.steps[i];
-      if (!s) return;
-      var li = el('li', 'bz-q');
-      li.appendChild(el('p', 'bz-q-ask', t(tpl, { word: focus })));
-      li.appendChild(el('p', 'bz-q-answer', s.answer));
-      list.appendChild(li);
-    });
-    stage.appendChild(list);
-    stage.appendChild(card(COPY.exampleLabel, group.example));
-    nextButton(COPY.toForm, toForm);
+  // Step 6: sign up. The page has one Brevo form (in the section at the bottom). While this step
+  // shows, that same form is moved into the card (Name hidden, button "Send me Day 1"); on any
+  // other step it goes back to the bottom section, which stays as the fallback.
+  function showSignup() {
+    screen(6, COPY.signupTitle);
+    stage.appendChild(el('p', 'bz-signup-body', COPY.signupBody));
+    stage.appendChild(el('p', 'bz-signup-small', COPY.signupSmall));
+    formIntoCard();
+    reached('card', group ? group.id : 'no_tool');
   }
 
-  // Last step: go to the sign-up form at the bottom of the page and put the cursor in the first field.
-  function toForm() {
-    var target = document.getElementById('signup');
-    var first = document.getElementById('FIRSTNAME');
-    fillFields();
-    if (target) target.scrollIntoView({ block: 'start' });
-    if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) {} }, 300);
-    reached();
+  var formBox = form && form.closest ? form.closest('.sib-form') : null;
+  var nameField = document.getElementById('FIRSTNAME');
+  var nameBlock = nameField && nameField.closest ? nameField.closest('.sib-field') : null;
+  var submitBtn = form && form.querySelector('button[type="submit"]');
+  var bottomLabel = submitBtn ? submitBtn.textContent.trim() : '';
+  var bottomSpot, awayNote;
+  if (formBox) {
+    // Remember where the form lives, and show a pointer there while it's up in the card
+    bottomSpot = document.createComment('sign-up form home');
+    formBox.parentNode.insertBefore(bottomSpot, formBox);
+    awayNote = el('div', 'bz-form-away');
+    awayNote.hidden = true;
+    awayNote.appendChild(button('bz-next bz-away-btn', COPY.awayButton, function () {
+      try { root.scrollIntoView({ block: 'start' }); } catch (e) { root.scrollIntoView(true); }
+    }));
+    formBox.parentNode.insertBefore(awayNote, bottomSpot);
   }
-  function reached() {
-    if (reachedForm) return;
-    reachedForm = true;
-    ping('reached_form', group ? group.id : 'no_tool');
+  function setButtonText(text) {
+    if (!submitBtn) return;
+    for (var i = submitBtn.childNodes.length - 1; i >= 0; i--) {
+      var nd = submitBtn.childNodes[i];
+      if (nd.nodeType === 3 && nd.nodeValue.trim()) { nd.nodeValue = ' ' + text + ' '; return; }
+    }
+  }
+  function formIntoCard() {
+    if (!formBox || formBox.parentNode === stage) return;
+    formBox.className += ' bz-in-card';
+    if (HIDE_NAME_IN_CARD) {
+      if (nameBlock) nameBlock.hidden = true;
+      if (nameField) { nameField.required = false; nameField.removeAttribute('data-required'); }
+    }
+    setButtonText(COPY.signupButton);
+    stage.appendChild(formBox);
+    awayNote.hidden = false;
+  }
+  function formToBottom() {
+    if (!formBox || formBox.parentNode !== stage) return;
+    formBox.className = formBox.className.replace(/\s*bz-in-card/g, '');
+    if (nameBlock) nameBlock.hidden = false;
+    if (nameField) { nameField.required = true; nameField.setAttribute('data-required', 'true'); }
+    setButtonText(bottomLabel);
+    bottomSpot.parentNode.insertBefore(formBox, bottomSpot);
+    awayNote.hidden = true;
+  }
+
+  // reached_form: once when step 6 shows (detail: industry), and once if the visitor scrolls down
+  // to the bottom form before ever reaching step 6 (detail "no_tool").
+  var reachedSent = {};
+  function reached(where, detail) {
+    if (reachedSent[where] || (where === 'bottom' && reachedSent.card)) return;
+    reachedSent[where] = true;
+    ping('reached_form', detail);
   }
 
   // Fill the hidden Brevo fields from the visitor's picks.
@@ -320,7 +360,7 @@
     if (words) words.value = picked.join(', ');
   }
 
-  var screens = { 1: showIndustry, 2: showWords, 3: showFiller, 4: showExample, 5: showSwipe, 6: showQuestions };
+  var screens = { 1: showIndustry, 2: showWords, 3: showFiller, 4: showExample, 5: showSwipe, 6: showSignup };
 
   function go(n, noScroll) {
     if (n > 1 && !group) n = 1;
@@ -339,11 +379,10 @@
     if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
   }
 
-  // reached_form also fires when the visitor scrolls down to the form without finishing the tool.
   var formSec = document.getElementById('signup');
   if (formSec && window.IntersectionObserver) {
     var io = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) { io.disconnect(); reached(); }
+      if (entries[0].isIntersecting && formBox && formBox.parentNode !== stage) { io.disconnect(); reached('bottom', 'no_tool'); }
     }, { threshold: 0.25 });
     io.observe(formSec);
   }
