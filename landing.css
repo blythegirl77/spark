@@ -59,3 +59,6 @@ body.lp { text-align: center; }
   .lp-hero .lp-arrow { width: 20px; margin-top: 10px; }
   .lp-hero .bz { margin-top: 8px; }
 }
+
+/* Second part of the form heading: smaller, on its own lines */
+.lp-cta-sub { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.15rem); font-weight: 400; line-height: 1.55; }
