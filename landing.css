@@ -4,7 +4,7 @@ body.lp { text-align: center; }
 .lp-header img { margin: 0 auto; width: clamp(150px, 40vw, 214px); }
 
 .lp-hero { margin-top: 0; padding: clamp(48px, 8vw, 90px) var(--gutter); background: var(--pink); color: var(--white); }
-.lp-hero h1 { margin: 0 auto 18px; max-width: 36rem; font-weight: 500; font-size: clamp(1.6rem, 5.6vw, 2.6rem); letter-spacing: .06em; line-height: 1.35; }
+.lp-hero h1 { margin: 0 auto 18px; max-width: 36rem; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 5.6vw, 2.6rem); letter-spacing: .03em; line-height: 1.3; } /* same font as the form title */
 .lp-sub { max-width: 34rem; margin: 0 auto; font-size: clamp(1rem, 2.6vw, 1.3rem); letter-spacing: .04em; line-height: 1.6; }
 
 .lp-sec { padding: clamp(44px, 7vw, 80px) var(--gutter); }
