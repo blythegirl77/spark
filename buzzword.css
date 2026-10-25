@@ -91,3 +91,8 @@
 .bz-next:disabled { background: #e8b9d6; cursor: default; }
 .bz button:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
 .bz-next:focus-visible { outline-color: var(--ink); }
+
+/* Card intro (step 1 only) */
+.bz-intro-title { margin: 0 0 6px; font-family: var(--font-body); font-weight: 600; font-size: clamp(1.3rem, 5.6vw, 1.6rem); line-height: 1.3; letter-spacing: .02em; color: var(--ink); }
+.bz-intro-sub { margin: 0 0 14px; padding-bottom: 14px; border-bottom: 1px solid #e3e6ec; font-family: var(--font-ui); font-size: .9rem; line-height: 1.5; color: #3c4858; }
+.bz-intro-sub + .bz-top { margin-top: 0; }

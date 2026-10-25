@@ -8,10 +8,12 @@
 
   // Words shown by the tool (the same on both pages).
   var COPY = {
+    introTitle: 'Would a client swipe right on your marketing?',
+    introSub: 'Pick the words you use. See what clients actually hear. About 30 seconds.',
     stepOf: 'Step {n} of 6',
     back: 'Back',
     next: 'Next',
-    industryTitle: 'What kind of business do you have?',
+    industryTitle: 'First, what do you do?',
     wordsTitle: 'Which of these buzz words have you used?',
     wordsSub: "We've all done it.",
     fillerTitle: 'Put together, they sound like this:',
@@ -98,11 +100,16 @@
   // ---- Screens ----
   function screen(n, title, sub) {
     stage.innerHTML = '';
+    if (n === 1) {
+      // Card intro, above "Step 1 of 6"
+      stage.appendChild(el('h2', 'bz-intro-title', COPY.introTitle));
+      stage.appendChild(el('p', 'bz-intro-sub', COPY.introSub));
+    }
     var top = el('div', 'bz-top');
     if (n > 1) top.appendChild(button('bz-back', '‹ ' + COPY.back, function () { go(n - 1); }));
     top.appendChild(el('span', 'bz-count', t(COPY.stepOf, { n: n })));
     stage.appendChild(top);
-    if (title) stage.appendChild(el('h2', 'bz-title', title));
+    if (title) stage.appendChild(el(n === 1 ? 'h3' : 'h2', 'bz-title', title));
     if (sub) stage.appendChild(el('p', 'bz-sub', sub));
     return stage;
   }
