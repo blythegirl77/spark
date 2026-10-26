@@ -82,6 +82,55 @@
     }
   } catch (e) {}
 
+  // Attention signals: tool seen, scroll depth, time on page.
+  try {
+    var start = Date.now();
+    var maxPct = 0;
+
+    var scrollPct = function () {
+      var doc = document.documentElement;
+      var full = Math.max(doc.scrollHeight, document.body ? document.body.scrollHeight : 0);
+      if (!full) return 0;
+      return Math.min(100, Math.round(100 * (window.scrollY + window.innerHeight) / full));
+    };
+
+    var onScroll = function () {
+      var pct = scrollPct();
+      if (pct > maxPct) maxPct = pct;
+      if (pct >= 50) window.smmTrack('scrolled_50');
+      if (pct >= 90) window.smmTrack('scrolled_90');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // The tool card must carry the attribute data-smm-tool.
+    var watchTool = function () {
+      var tool = document.querySelector('[data-smm-tool]');
+      if (!tool || !('IntersectionObserver' in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { window.smmTrack('tool_seen'); io.disconnect(); }
+        });
+      }, { threshold: 0.4 });
+      io.observe(tool);
+    };
+
+    var leave = function () {
+      onScroll();
+      var secs = Math.min(99999, Math.round((Date.now() - start) / 1000));
+      window.smmTrack('left', secs + ';' + maxPct);
+    };
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') leave();
+    });
+    window.addEventListener('pagehide', leave);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { onScroll(); watchTool(); });
+    } else {
+      onScroll(); watchTool();
+    }
+  } catch (e) {}
+
   // Returns a Promise of { n, moment, buzzword, momentPct } or { n } (too few
   // swipes yet), or null on any error. Never show a number when momentPct is missing.
   window.smmSwipeTally = function () {
