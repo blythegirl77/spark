@@ -378,15 +378,44 @@
     if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
   }
 
-  // form_submitted: when the real form is sent with a name, an email and the consent box ticked
+  // After the real form is sent (with a name, an email and the consent box ticked), wait for Brevo's
+  // answer: form_submitted when it confirms the signup, form_error when it shows its error message
   // (detail: "card" for the step 6 form, "bottom" for the form at the end of the page).
-  var submitFrom = null;
+  // Brevo confirms either by showing its success message or, when the form has a thank-you page
+  // set, by sending the visitor there; leaving the page while waiting, with no error shown, counts
+  // as that redirect.
+  var submitFrom = null, waitingFor = null, waitTimer = null;
+  function shownPanel(id) {
+    var p = realField(id);
+    return !!p && window.getComputedStyle(p).display !== 'none';
+  }
+  function settle(event) {
+    if (!waitingFor) return;
+    var from = waitingFor;
+    waitingFor = null;
+    clearInterval(waitTimer);
+    track(event, from);
+  }
+  window.addEventListener('pagehide', function () {
+    if (waitingFor && !shownPanel('error-message')) settle('form_submitted');
+  });
   if (form) form.addEventListener('submit', function () {
     fillFields();
     var from = submitFrom || (formBox && formBox.parentNode === stage ? 'card' : 'bottom');
     submitFrom = null;
     var name = realField('FIRSTNAME'), email = realField('EMAIL'), optin = realField('OPT_IN');
-    if (name && name.value.trim() && email && email.value.trim() && optin && optin.checked) track('form_submitted', from);
+    if (!(name && name.value.trim() && email && email.value.trim() && optin && optin.checked)) return;
+    // Hide any message from an earlier try, so only this answer counts
+    ['success-message', 'error-message'].forEach(function (id) { var p = realField(id); if (p) p.style.display = ''; });
+    waitingFor = from;
+    clearInterval(waitTimer);
+    var tries = 0;
+    waitTimer = setInterval(function () {
+      tries++;
+      if (shownPanel('success-message')) settle('form_submitted');
+      else if (shownPanel('error-message')) settle('form_error');
+      else if (tries > 100) { waitingFor = null; clearInterval(waitTimer); } // no answer after 30 s
+    }, 300);
   }, true);
 
   // Load the data; if it can't load, the tool stays empty and the page works as before.
