@@ -44,3 +44,23 @@ body.game a { color: #141414; }
 .g-footer-work { margin-top: 14px; font-size: 13px; color: #C9CCD2; }
 .g-footer-legal { margin-top: 14px; font-size: 12px; color: #C9CCD2; }
 .g-footer-legal .cookie-settings { color: #C9CCD2; font-size: 12px; }
+
+/* Brevo form on /vote: undo the site's boxed form style (style.css) so it matches the game design */
+body.game #sib-container { max-width: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: transparent !important; text-align: left; }
+body.game .g-form-wrap { width: 100%; margin-top: 28px; }
+body.game .g-form-wrap .g-form { margin-top: 0; }
+body.game .sib-form-block { padding: 0 !important; }
+body.game .g-field .entry__label { display: block; margin: 0 0 6px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px; color: #141414; text-align: left; }
+body.game #sib-container .g-field input.input { width: 100%; height: 48px !important; padding: 0 14px !important; border: 2px solid #141414 !important; border-radius: 12px !important; font-family: 'DM Sans', sans-serif !important; font-size: 16px !important; color: #141414 !important; background: #FFFFFF !important; }
+body.game #sib-container .g-field input.input:focus-visible { outline: 3px solid #C43D8E; outline-offset: 2px; }
+body.game #sib-container .g-btn-submit { width: 100%; padding: 16px 20px !important; border: 0 !important; border-radius: 999px !important; background: #141414 !important; color: #FFFFFF !important; font-family: 'Fredoka', sans-serif !important; font-size: 18px !important; font-weight: 600 !important; letter-spacing: 0; }
+body.game .entry__error { display: block; margin-top: 6px; font-size: 14px; color: #A3262A; text-align: left; }
+body.game .entry__error:empty { display: none; }
+.g-pick-error { margin: 2px 0 0; font-size: 15px; font-weight: 700; color: #A3262A; }
+.g-pick-error[hidden] { display: none; }
+.g-legal { margin: 14px 0 0; font-size: 12px; line-height: 1.45; color: #555555; text-align: left; }
+.g-legal a { color: #555555 !important; }
+body.game .sib-form-message-panel { margin: 0 0 14px !important; padding: 12px 14px; border-radius: 12px; font-size: 15px; text-align: left; }
+body.game #error-message { background: #FFEDED; color: #661D1D; border: 2px solid #A3262A; }
+body.game #success-message { background: #E7FAF0; color: #085229; border: 2px solid #13A35B; }
+body.game .sib-notification__icon { width: 18px; height: 18px; vertical-align: -3px; margin-right: 6px; fill: currentColor; }
