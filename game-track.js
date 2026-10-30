@@ -1,5 +1,5 @@
 // "Who Killed Marketing?" suspect pages: one cookieless visit ping per scan, for the live
-// "conversations sparked" count (/case-count). No cookies; nothing identifies the visitor.
+// "connections sparked" count (/case-count). No cookies; nothing identifies the visitor.
 // A reload in the same browser tab isn't counted again (a sessionStorage flag, no ID).
 (function () {
   var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyeWHm1OKpKIgedWI3Hc1NwlnSYwPKy1vIF-GIys6JGUEjYF1lH0sQYTh99Vf-9E7A/exec';
