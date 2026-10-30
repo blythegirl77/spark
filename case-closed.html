@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Consent defaults: tracking stays off until the visitor accepts (must run before Tag Manager) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+      analytics_storage: 'denied', wait_for_update: 500
+    });
+    try {
+      // Saved choice: the shared key is tracking_consent (granted / denied). Older visits used spark-consent.
+      var saved = localStorage.getItem('tracking_consent') || localStorage.getItem('spark-consent');
+      if (saved === 'granted' || saved === 'denied') {
+        if (!localStorage.getItem('tracking_consent')) localStorage.setItem('tracking_consent', saved);
+        if (saved === 'granted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'
+          });
+        }
+        // Tell Tag Manager about the saved choice before it loads
+        dataLayer.push({ event: 'tracking_consent_update', tracking_consent: saved });
+      }
+    } catch (e) {}
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TWLB5FQ6');</script>
+  <!-- End Google Tag Manager -->
+  <title>Case closed | Who Killed Marketing?</title>
+  <link rel="icon" href="/assets/mascot-hero.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Fredoka:wght@600;700&family=Sniglet:wght@400;800&family=Inter:ital,wght@0,400;0,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=16">
+  <link rel="stylesheet" href="/game.css?v=1">
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'vote_submitted' });
+  </script>
+</head>
+<body class="game" data-page="case-closed">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWLB5FQ6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <main class="g-main">
+    <svg class="g-mark" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true"><circle cx="30" cy="30" r="20" fill="none" stroke="#141414" stroke-width="7"></circle><path d="M45 45 L62 62" stroke="#141414" stroke-width="8" stroke-linecap="round"></path></svg>
+    <h1 class="g-title">Case closed!</h1>
+    <p class="g-kicker">Your entry is in. The killer was…</p>
+    <div class="g-name" style="background: #C43D8E">The Impressionist</div>
+    <h2 class="g-h2">Their crime</h2>
+    <p class="g-text">Always trying to impress, and copying everyone else to do it.</p>
+    <h2 class="g-h2 g-h2-next">Their motive</h2>
+    <p class="g-text">Not what you’d expect. Hear it at Lara’s closing talk.</p>
+    <div class="g-note">Keep it to yourself until then. Others are still sleuthing.</div>
+  </main>
+
+  <footer class="g-footer">
+    <div class="g-footer-name">Spark My Marketing</div>
+    <div class="g-footer-site">sparkmymarketing.com</div>
+    <div class="g-footer-work">Work with Lara 1:1 at <a href="https://www.larakehler.ca">larakehler.ca</a></div>
+    <div class="g-footer-legal"><a href="/privacy.html">Privacy Policy</a> &middot; <button type="button" class="cookie-settings" data-cookie-settings>Cookie settings</button></div>
+  </footer>
+
+  <script src="/consent.js?v=5"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+/* "Who Killed Marketing?" game pages (/buzzword, /perfectionist, /algorithm, /vote, /case-closed) */
+body.game { margin: 0; background: #FFFFFF; color: #141414; font-family: 'DM Sans', system-ui, sans-serif; text-align: center; display: flex; flex-direction: column; min-height: 100vh; }
+body.game a { color: #141414; }
+
+.g-main { flex-grow: 1; width: 100%; max-width: 480px; margin: 0 auto; box-sizing: border-box; padding: 48px 24px 40px; display: flex; flex-direction: column; align-items: center; }
+.g-mark { display: block; }
+.g-title { margin: 18px 0 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 30px; letter-spacing: .5px; line-height: 1.2; }
+.g-kicker { margin: 12px 0 0; font-size: 16px; letter-spacing: 1px; }
+.g-lede { margin: 12px 0 0; font-size: 16px; line-height: 1.5; letter-spacing: .5px; }
+.g-name { margin-top: 22px; width: 100%; box-sizing: border-box; color: #FFFFFF; border-radius: 24px; padding: 30px 20px; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 40px; line-height: 1.1; letter-spacing: 1px; }
+.g-h2 { margin: 34px 0 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; }
+.g-h2-next { margin-top: 22px; }
+.g-text { margin: 6px 0 0; font-size: 16px; line-height: 1.5; letter-spacing: .5px; }
+.g-note { margin-top: 32px; width: 100%; box-sizing: border-box; border: 2px dashed #141414; border-radius: 16px; padding: 14px 16px; font-size: 15px; line-height: 1.4; }
+.g-btn { margin-top: 16px; display: block; width: 100%; box-sizing: border-box; background: #141414; color: #FFFFFF !important; text-decoration: none; border: 0; border-radius: 999px; padding: 16px 20px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 18px; text-align: center; cursor: pointer; }
+.g-btn:focus-visible, .g-pick:focus-within, .g-optin:focus-within { outline: 3px solid #C43D8E; outline-offset: 3px; }
+
+/* Vote form */
+.g-form { margin-top: 28px; width: 100%; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.g-picks { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.g-legend { padding: 0; margin-bottom: 10px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; }
+.g-pick { display: flex; align-items: center; gap: 12px; border: 2px solid #D5D5D5; background: #FFFFFF; border-radius: 16px; padding: 14px 16px; min-height: 56px; box-sizing: border-box; cursor: pointer; }
+.g-pick:has(input:checked) { border: 3px solid var(--c); background: #F6F4F1; padding: 13px 15px; }
+.g-pick input, .g-optin input { width: 20px; height: 20px; margin: 0; accent-color: #141414; flex-shrink: 0; }
+.g-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--c); flex-shrink: 0; }
+.g-pick-name { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 18px; }
+.g-field { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.g-field-first { margin-top: 18px; }
+.g-field label { font-weight: 700; font-size: 15px; }
+.g-optional { font-weight: 400; }
+.g-field input, .g-field textarea { box-sizing: border-box; border: 2px solid #141414; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 16px; color: #141414; background: #FFFFFF; }
+.g-field input { height: 48px; padding: 0 14px; }
+.g-field textarea { padding: 12px 14px; resize: vertical; }
+.g-hint { font-size: 13px; color: #555555; }
+.g-optin { margin-top: 12px; display: flex; align-items: flex-start; gap: 12px; border: 2px dashed #141414; border-radius: 16px; padding: 14px 16px; cursor: pointer; font-size: 15px; line-height: 1.45; }
+.g-optin input { margin-top: 2px; }
+.g-btn-submit { margin-top: 14px; }
+
+/* Footer */
+.g-footer { background: #1B1E24; color: #FFFFFF; box-sizing: border-box; padding: 28px 24px; text-align: center; }
+.g-footer a { color: #FFFFFF !important; }
+.g-footer-name { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: .5px; }
+.g-footer-site { margin-top: 4px; font-size: 14px; letter-spacing: .5px; }
+.g-footer-work { margin-top: 14px; font-size: 13px; color: #C9CCD2; }
+.g-footer-legal { margin-top: 14px; font-size: 12px; color: #C9CCD2; }
+.g-footer-legal .cookie-settings { color: #C9CCD2; font-size: 12px; }
