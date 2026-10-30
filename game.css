@@ -27,11 +27,8 @@ body.game a { color: #141414; }
 .g-field { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
 .g-field-first { margin-top: 18px; }
 .g-field label { font-weight: 700; font-size: 15px; }
-.g-optional { font-weight: 400; }
-.g-field input, .g-field textarea { box-sizing: border-box; border: 2px solid #141414; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 16px; color: #141414; background: #FFFFFF; }
+.g-field input { box-sizing: border-box; border: 2px solid #141414; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 16px; color: #141414; background: #FFFFFF; }
 .g-field input { height: 48px; padding: 0 14px; }
-.g-field textarea { padding: 12px 14px; resize: vertical; }
-.g-hint { font-size: 13px; color: #555555; }
 .g-optin { margin-top: 12px; display: flex; align-items: flex-start; gap: 12px; border: 2px dashed #141414; border-radius: 16px; padding: 14px 16px; cursor: pointer; font-size: 15px; line-height: 1.45; }
 .g-optin input { margin-top: 2px; }
 .g-btn-submit { margin-top: 14px; }
