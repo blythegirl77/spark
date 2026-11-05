@@ -32,6 +32,10 @@ body.game a { color: #141414; }
 .g-optin { margin-top: 12px; display: flex; align-items: flex-start; gap: 12px; border: 2px dashed #141414; border-radius: 16px; padding: 14px 16px; cursor: pointer; font-size: 15px; line-height: 1.45; }
 .g-optin input { margin-top: 2px; }
 .g-btn-submit { margin-top: 14px; }
+/* Suspect pages: the "Name the killer" button in the site's bright pink, so it stands out */
+a.g-btn { background: #DA55A7; }
+a.g-btn:hover { background: #C8408F; }
+a.g-btn:focus-visible { outline-color: #141414; }
 
 /* Footer */
 .g-footer { background: #1B1E24; color: #FFFFFF; box-sizing: border-box; padding: 28px 24px; text-align: center; }
