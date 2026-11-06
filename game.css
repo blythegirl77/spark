@@ -34,6 +34,9 @@ body.game a { color: #141414; }
 .g-btn-submit { margin-top: 14px; }
 /* Suspect pages: the "Name the killer" button in the site's bright pink, so it stands out */
 a.g-btn { background: #DA55A7; }
+/* Black arrow pointing down at that button */
+.g-arrow { display: block; width: 28px; height: auto; margin: 28px auto 0; }
+.g-arrow + .g-btn { margin-top: 12px; }
 a.g-btn:hover { background: #C8408F; }
 a.g-btn:focus-visible { outline-color: #141414; }
 
