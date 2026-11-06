@@ -121,6 +121,10 @@ u { text-underline-offset: 3px; }
   padding: clamp(40px, 7vw, 64px) var(--gutter) 28px;
 }
 .footer-logo { width: clamp(130px, 18vw, 170px); margin-bottom: clamp(24px, 4vw, 36px); }
+/* Footer logo: the white face plus the name in Fredoka Bold, in white */
+.brand-footer { margin-bottom: clamp(24px, 4vw, 36px); }
+.brand-footer .brand-face { width: clamp(80px, 11vw, 104px); }
+.brand-footer .brand-name { font-size: clamp(1.2rem, 2.2vw, 1.5rem); color: var(--white); }
 .footer-tagline {
   max-width: 28rem;
   margin: 0 auto clamp(32px, 6vw, 56px);
