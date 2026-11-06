@@ -30,6 +30,10 @@ u { text-underline-offset: 3px; }
 /* Hero logo */
 .hero { padding: clamp(40px, 6vw, 70px) 20px clamp(56px, 8vw, 100px); }
 .logo { width: clamp(200px, 30vw, 330px); }
+/* Logo: the face plus "Spark My Marketing" in Fredoka Bold (the game pages' heading font) */
+.brand { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 0 auto; }
+.brand-face { width: clamp(110px, 15vw, 160px); height: auto; margin: 0; }
+.brand-name { font-family: var(--font-body); font-weight: 700; font-size: clamp(1.6rem, 3.2vw, 2.2rem); line-height: 1.15; letter-spacing: .5px; color: var(--ink); }
 
 /* Full-width coloured bands */
 .band { padding: clamp(56px, 9vw, 110px) var(--gutter); color: var(--white); }
