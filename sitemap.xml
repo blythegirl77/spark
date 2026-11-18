@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pages that should appear in Google. Pages marked noindex (ad tests, WEDO, game, thank-you pages) are left out on purpose. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://sparkmymarketing.com/</loc>
+    <lastmod>2026-11-18</lastmod>
+  </url>
+  <url>
+    <loc>https://sparkmymarketing.com/privacy.html</loc>
+    <lastmod>2026-11-18</lastmod>
+  </url>
+</urlset>

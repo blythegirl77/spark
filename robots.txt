@@ -1,0 +1,7 @@
+# sparkmymarketing.com
+# Everything may be crawled. Campaign, game and thank-you pages carry a "noindex" tag instead of
+# being blocked here, so Google can still read that tag and keep them out of search.
+User-agent: *
+Allow: /
+
+Sitemap: https://sparkmymarketing.com/sitemap.xml
