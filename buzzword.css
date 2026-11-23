@@ -124,5 +124,10 @@
 /* In the card the button comes before the consent line, whatever order the page's form uses */
 .bz-in-card form { display: flex; flex-direction: column; }
 .bz-in-card .sib-field-button { order: 2; }
-.bz-in-card .sib-field-optin { order: 3; }
-.bz-in-card .sib-legal { order: 4; }
+.bz-in-card .bz-after-btn { order: 3; }
+.bz-in-card .sib-field-optin { order: 4; }
+.bz-in-card .sib-legal { order: 5; }
+
+/* Step 4 note under the example, and the reassurance line under the step 6 button */
+.bz-note { margin: -4px 0 16px; font-family: var(--font-ui); font-size: .9rem; font-style: italic; color: #3c4858; }
+.bz-after-btn { margin: -6px 0 12px !important; font-family: var(--font-ui); font-size: .82rem; line-height: 1.4; color: #5c6678; text-align: center; }

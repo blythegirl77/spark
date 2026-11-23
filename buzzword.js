@@ -8,25 +8,29 @@
 
   // Words shown by the tool (the same on both pages).
   var COPY = {
-    introTitle: 'Find out in 30 seconds.',
-    introSub: '',
+    introTitle: 'What do you do?',
+    introSub: 'Pick the closest.',
     stepOf: 'Step {n} of 6',
     back: 'Back',
     next: 'Next',
-    industryTitle: 'What do you do?',
-    wordsTitle: 'Which of these buzz words have you used?',
-    wordsSub: "We've all done it.",
-    fillerTitle: 'Sound familiar? This could be any of a hundred websites.',
+    industryTitle: '',
+    wordsTitle: 'Which of these have you written?',
+    wordsSub: 'Be honest. I have too.',
+    fillerTitle: 'Sound familiar?',
+    fillerSub: 'Here\u2019s a website made from the words you picked. It could belong to anyone in your industry.',
+    fillerNext: 'Show me the other way',
     fillerTitleNone: "Even if you haven't, you've read this a hundred times.",
-    exampleTitle: 'Now the same kind of business, without the buzzwords:',
+    exampleTitle: 'Same business. No buzzwords.',
+    exampleNote: 'Notice what you can picture.',
     exampleLabel: 'Example',
-    swipeTitle: 'Which would you swipe right on?',
+    swipeTitle: 'Which one would you swipe right on?',
     fillerLabel: 'The buzzword version',
     heartLabel: 'Swipe right on this one',
     shareAll: '{p}% of people picked the same.',
-    signupTitle: 'That was the difference between a buzzword and a moment.',
-    signupBody: 'Now try it on your own business.',
-    signupSmall: 'Free \u00b7 7 days \u00b7 15 min a day \u00b7 AI feedback on your writing',
+    signupTitle: 'That\u2019s the difference between a buzzword and a moment.',
+    signupBody: 'Now find yours, in your own words.',
+    signupSmall: 'A free 7-day writing challenge, about 15 minutes a day. Each day, a writing coach replies with questions until it sounds like you.',
+    signupAfterButton: 'Day 1 arrives in a few minutes. Free. Unsubscribe anytime.',
     signupButton: 'Send me Day 1',
     signupNamePlaceholder: 'First name',
     signupConsent: 'I agree to get the course emails and accept the privacy statement.'
@@ -164,14 +168,15 @@
   }
 
   function showFiller() {
-    screen(3, picked.length ? COPY.fillerTitle : COPY.fillerTitleNone);
+    screen(3, picked.length ? COPY.fillerTitle : COPY.fillerTitleNone, picked.length ? COPY.fillerSub : '');
     stage.appendChild(card('', blurb(true), 'bz-card-filler'));
-    nextButton(COPY.next, function () { go(4); });
+    nextButton(COPY.fillerNext || COPY.next, function () { go(4); });
   }
 
   function showExample() {
     screen(4, COPY.exampleTitle);
     stage.appendChild(card(COPY.exampleLabel, group.example));
+    if (COPY.exampleNote) stage.appendChild(el('p', 'bz-note', COPY.exampleNote));
     track('example_viewed');
     nextButton(COPY.next, function () { go(5); });
   }
@@ -257,7 +262,7 @@
   var consentText = form && form.querySelector('.sib-consent p');
   var bottomPlaceholder = nameField ? nameField.placeholder : '';
   var bottomConsent = consentText ? consentText.textContent : '';
-  var bottomSpot, template, copy;
+  var bottomSpot, template, copy, afterBtn = null;
   if (formBox) {
     bottomSpot = document.createComment('sign-up form home'); // where the real form lives
     formBox.parentNode.insertBefore(bottomSpot, formBox);
@@ -333,11 +338,18 @@
     if (COPY.signupConsent && consentText) consentText.textContent = COPY.signupConsent;
     copy = makeCopy();
     bottomSpot.parentNode.insertBefore(copy, bottomSpot);
+    // A short reassurance line right under the button (card only)
+    var btnBlock = submitBtn && submitBtn.closest ? submitBtn.closest('.sib-field-button') : null;
+    if (COPY.signupAfterButton && btnBlock && !afterBtn) {
+      afterBtn = el('p', 'bz-after-btn', COPY.signupAfterButton);
+      btnBlock.parentNode.insertBefore(afterBtn, btnBlock.nextSibling);
+    }
     stage.appendChild(formBox);
   }
   function formToBottom() {
     if (!formBox || formBox.parentNode !== stage) return;
     formBox.className = formBox.className.replace(/\s*bz-in-card/g, '');
+    if (afterBtn) { afterBtn.parentNode.removeChild(afterBtn); afterBtn = null; }
     setButtonText(bottomLabel);
     if (nameField) nameField.placeholder = bottomPlaceholder;
     if (consentText) consentText.textContent = bottomConsent;
