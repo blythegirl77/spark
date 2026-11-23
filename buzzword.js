@@ -380,7 +380,8 @@
 
   // After the real form is sent (with a name, an email and the consent box ticked), wait for Brevo's
   // answer: form_submitted when it confirms the signup, form_error when it shows its error message
-  // (detail: "card" for the step 6 form, "bottom" for the form at the end of the page).
+  // (detail: "card" for the step 6 form, "bottom" for the form at the end of the page; form_error also
+  // carries Brevo's HTTP status and reply where brevo-debug.js is loaded).
   // Brevo confirms either by showing its success message or, when the form has a thank-you page
   // set, by sending the visitor there; leaving the page while waiting, with no error shown, counts
   // as that redirect.
@@ -394,7 +395,14 @@
     var from = waitingFor;
     waitingFor = null;
     clearInterval(waitTimer);
-    track(event, from);
+    if (event !== 'form_error') return track(event, from);
+    // On pages that load brevo-debug.js, add Brevo's HTTP status and reply: "card;400;{...}"
+    var tries = 0;
+    (function report() {
+      var last = window.smmBrevoLast;
+      if (!last && window.smmBrevoLast !== undefined && tries++ < 5) return setTimeout(report, 200);
+      track(event, last ? from + ';' + last.status + ';' + last.body : from);
+    })();
   }
   window.addEventListener('pagehide', function () {
     if (waitingFor && !shownPanel('error-message')) settle('form_submitted');
