@@ -263,23 +263,31 @@
   var bottomPlaceholder = nameField ? nameField.placeholder : '';
   var bottomConsent = consentText ? consentText.textContent : '';
   var bottomSpot, template, copy, afterBtn = null;
+  // Where the real form normally sits, for the form_submitted / form_error detail ("bottom" unless
+  // its section says otherwise with data-form-where, e.g. "middle").
+  var homeWhere = 'bottom';
   if (formBox) {
+    var home = formBox.closest ? formBox.closest('[data-form-where]') : null;
+    if (home) homeWhere = home.getAttribute('data-form-where');
     bottomSpot = document.createComment('sign-up form home'); // where the real form lives
     formBox.parentNode.insertBefore(bottomSpot, formBox);
     template = formBox.cloneNode(true); // untouched markup, taken before Brevo's script runs
   }
 
-  // The copy shown at the bottom while the real form is in the card. It has no hidden fields and
-  // no names, and its ids are renamed (except sib-container, which the styles use; the real form
-  // comes first on the page, so scripts looking it up by id still find the real one).
+  // A copy of the form: shown where the real form normally lives while the real one is in the card,
+  // and, on pages that ask for it, permanently in an extra spot ([data-form-copy]). A copy has no
+  // hidden fields and no names, and every id gets a prefix, so the real form keeps its own ids.
+  // On submit it hands its answers to the real form and submits that.
+  // Old pages style the copy through #sib-container, so the plain copy keeps that one id unless asked.
   function realField(id) { return document.getElementById(id); }
-  function makeCopy() {
+  function makeCopy(prefix, where, renameAll) {
+    prefix = prefix || 'bzc-';
     var c = template.cloneNode(true);
     var drop = c.querySelectorAll('input[type="hidden"], .input--hidden');
     for (var i = 0; i < drop.length; i++) drop[i].parentNode.removeChild(drop[i]);
     var withId = c.querySelectorAll('[id]');
     for (i = 0; i < withId.length; i++) {
-      if (withId[i].id !== 'sib-container') withId[i].id = 'bzc-' + withId[i].id;
+      if (renameAll || withId[i].id !== 'sib-container') withId[i].id = prefix + withId[i].id;
     }
     var named = c.querySelectorAll('[name]');
     for (i = 0; i < named.length; i++) named[i].removeAttribute('name');
@@ -288,15 +296,16 @@
     var btn = c.querySelector('button[type="submit"]');
     btn.setAttribute('form', f.id);
     // Start from whatever was already typed
-    c.querySelector('#bzc-FIRSTNAME').value = realField('FIRSTNAME').value;
-    c.querySelector('#bzc-EMAIL').value = realField('EMAIL').value;
-    c.querySelector('#bzc-OPT_IN').checked = realField('OPT_IN').checked;
+    c.querySelector('#' + prefix + 'FIRSTNAME').value = realField('FIRSTNAME').value;
+    c.querySelector('#' + prefix + 'EMAIL').value = realField('EMAIL').value;
+    c.querySelector('#' + prefix + 'OPT_IN').checked = realField('OPT_IN').checked;
+    c.setAttribute('data-copy-prefix', prefix);
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       if (f.checkValidity && !f.checkValidity()) { if (f.reportValidity) f.reportValidity(); return; }
       copyToReal(c);
       fillFields();
-      submitFrom = 'bottom';
+      submitFrom = where || homeWhere;
       btn.disabled = true;
       submitBtn.click(); // the real form submits through Brevo as usual
       watchResult(c, btn);
@@ -304,9 +313,10 @@
     return c;
   }
   function copyToReal(c) {
-    realField('FIRSTNAME').value = c.querySelector('#bzc-FIRSTNAME').value;
-    realField('EMAIL').value = c.querySelector('#bzc-EMAIL').value;
-    realField('OPT_IN').checked = c.querySelector('#bzc-OPT_IN').checked;
+    var p = '#' + (c.getAttribute('data-copy-prefix') || 'bzc-');
+    realField('FIRSTNAME').value = c.querySelector(p + 'FIRSTNAME').value;
+    realField('EMAIL').value = c.querySelector(p + 'EMAIL').value;
+    realField('OPT_IN').checked = c.querySelector(p + 'OPT_IN').checked;
   }
   // Mirror Brevo's success or error message from the real form onto the copy.
   function watchResult(c, btn) {
@@ -318,7 +328,8 @@
       if (bad || good || tries > 50) {
         clearInterval(timer);
         btn.disabled = false;
-        var panel = c.querySelector(good ? '#bzc-success-message' : '#bzc-error-message');
+        var p = '#' + (c.getAttribute('data-copy-prefix') || 'bzc-');
+        var panel = c.querySelector(p + (good ? 'success-message' : 'error-message'));
         if ((bad || good) && panel) panel.style.display = 'block';
       }
     }, 300);
@@ -336,7 +347,7 @@
     setButtonText(COPY.signupButton);
     if (COPY.signupNamePlaceholder && nameField) nameField.placeholder = COPY.signupNamePlaceholder;
     if (COPY.signupConsent && consentText) consentText.textContent = COPY.signupConsent;
-    copy = makeCopy();
+    copy = makeCopy('bzc-', homeWhere, renameCopyIds);
     bottomSpot.parentNode.insertBefore(copy, bottomSpot);
     // A short reassurance line right under the button (card only)
     var btnBlock = submitBtn && submitBtn.closest ? submitBtn.closest('.sib-field-button') : null;
@@ -419,9 +430,18 @@
   window.addEventListener('pagehide', function () {
     if (waitingFor && !shownPanel('error-message')) settle('form_submitted');
   });
+  // Extra, permanent form spots ([data-form-copy="bottom"]): each gets a copy that submits the real form.
+  var renameCopyIds = !!document.querySelector('[data-form-copy], body.fn'); // pages that style forms by class, not #sib-container
+  if (template) {
+    var spots = document.querySelectorAll('[data-form-copy]');
+    for (var si = 0; si < spots.length; si++) {
+      spots[si].appendChild(makeCopy('bzs' + si + '-', spots[si].getAttribute('data-form-copy') || 'bottom', true));
+    }
+  }
+
   if (form) form.addEventListener('submit', function () {
     fillFields();
-    var from = submitFrom || (formBox && formBox.parentNode === stage ? 'card' : 'bottom');
+    var from = submitFrom || (formBox && formBox.parentNode === stage ? 'card' : homeWhere);
     submitFrom = null;
     var name = realField('FIRSTNAME'), email = realField('EMAIL'), optin = realField('OPT_IN');
     if (!(name && name.value.trim() && email && email.value.trim() && optin && optin.checked)) return;
