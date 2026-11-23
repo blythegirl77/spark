@@ -130,4 +130,4 @@
 
 /* Step 4 note under the example, and the reassurance line under the step 6 button */
 .bz-note { margin: -4px 0 16px; font-family: var(--font-ui); font-size: .9rem; font-style: italic; color: #3c4858; }
-.bz-after-btn { margin: -6px 0 12px !important; font-family: var(--font-ui); font-size: .82rem; line-height: 1.4; color: #5c6678; text-align: center; }
+.bz-after-btn { margin: 14px 0 16px !important; font-family: var(--font-ui); font-size: .82rem; line-height: 1.4; color: #5c6678; text-align: center; }
