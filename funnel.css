@@ -138,3 +138,19 @@ body.fn :is(#sib-container, [id$="-sib-container"]) .sib-consent { flex: 1 1 aut
 body.fn .fn-story-photo, body.fn .fn-knot img { margin: 0; }
 body.fn [id$="-sib-container"] .sib-form-block__button { border: 0 !important; color: #FFFFFF !important; cursor: pointer; }
 body.fn .fn-form-wrap .sib-form-message-panel { margin: 0 0 14px !important; padding: 12px 14px; border-radius: 10px; font-size: .85rem; text-align: left; background: #FFFFFF; color: var(--fn-dark); }
+
+/* Buzzword Swipe tool: everything in the typewriter font, like the rest of the page.
+   Space Mono runs wide, so sizes are a touch smaller than in the shared tool styles. */
+body.fn .bz, body.fn .bz :is(button, p, span, li, h2, h3, div, label) { font-family: var(--fn-mono) !important; }
+body.fn .bz-title { font-size: 16px; font-weight: 700; line-height: 1.6; letter-spacing: .02em; }
+body.fn .bz-sub, body.fn .bz-intro-sub, body.fn .bz-note { font-size: 13px; line-height: 1.6; letter-spacing: .02em; }
+body.fn .bz-count, body.fn .bz-back { font-size: 12px; letter-spacing: .04em; }
+body.fn .bz-option-label { font-size: 13px; font-weight: 400; letter-spacing: .01em; line-height: 1.35; }
+body.fn .bz-option-who { font-size: 11px; }
+body.fn .bz-chip { font-size: 13px; letter-spacing: .01em; padding: 10px 14px; }
+body.fn .bz-label { font-size: 11px; font-weight: 700; }
+body.fn .bz-text, body.fn .bz-result, body.fn .bz-signup-body { font-size: 14px; line-height: 1.7; letter-spacing: .02em; }
+body.fn .bz-signup-small, body.fn .bz-after-btn { font-size: 12px; line-height: 1.5; }
+body.fn .bz-q-ask { font-size: 14px; }
+body.fn .bz-q-answer { font-size: 13px; }
+body.fn .bz-next { font-size: 14px; font-weight: 700; letter-spacing: .08em; }
